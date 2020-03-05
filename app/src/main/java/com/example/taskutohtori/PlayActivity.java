@@ -63,7 +63,7 @@ public class PlayActivity extends AppCompatActivity {
         updateUI();
     }
 
-    public void onNoButtonClick(View v) {
+    public void onNoButtonClick(View v)  {
         Log.d("TEST","allMainsAsked "+allMainQuestionsAsked);
         if(!allMainQuestionsAsked) {
             removeDiseases(currentSymptom);
