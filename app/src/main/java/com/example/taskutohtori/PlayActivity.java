@@ -23,8 +23,8 @@ public class PlayActivity extends AppCompatActivity {
     ImageManager thisImageManager;
 
     ArrayList<Disease> listOfAllDiseases;
-    ArrayList<Symptom> positiveSymptoms;
-    ArrayList<Symptom> askedSymptoms;
+    ArrayList<String> positiveSymptoms;
+    ArrayList<String> askedSymptoms;
     Symptom currentSymptom;
     ArrayList<Symptom> finalSymptoms;
     Boolean allMainQuestionsAsked;
@@ -64,6 +64,7 @@ public class PlayActivity extends AppCompatActivity {
     }
 
     public void onNoButtonClick(View v) {
+        Log.d("TEST","allMainsAsked "+allMainQuestionsAsked);
         if(!allMainQuestionsAsked) {
             removeDiseases(currentSymptom);
         }
@@ -107,7 +108,9 @@ public class PlayActivity extends AppCompatActivity {
         }
         if(nextDisease != null) {
             for(int i = 0; i < database.getJoinerDao().getMainSymptomsWithDiseaseId(nextDisease.id).size(); i++) {
-                if (!positiveSymptoms.contains(new Symptom(database.getJoinerDao().getMainSymptomsWithDiseaseId(nextDisease.id).get(i).name))) {
+                Log.d("TEST","name test"+ database.getJoinerDao().getMainSymptomsWithDiseaseId(nextDisease.id).get(i).name);
+                Log.d("TEST","!positiveSymptom = "+new Symptom(database.getJoinerDao().getMainSymptomsWithDiseaseId(nextDisease.id).get(i).name));
+                if (!positiveSymptoms.contains(new Symptom(database.getJoinerDao().getMainSymptomsWithDiseaseId(nextDisease.id).get(i).name).name)) {
                     return new Symptom(database.getJoinerDao().getMainSymptomsWithDiseaseId(nextDisease.id).get(i).name);
                 }
             }
@@ -148,11 +151,17 @@ public class PlayActivity extends AppCompatActivity {
 
     //to be called after user answers no to the question
     private void removeDiseases(Symptom currentSymptom) {
-        askedSymptoms.add(currentSymptom);
+        Log.d("TEST","removeDisease");
+
+        askedSymptoms.add(currentSymptom.name);
+        Log.d("TEST","lenght" + database.getJoinerDao().getDiseasesWithSymptomId(currentSymptom.id).size());
         for (int i = 0; i < database.getJoinerDao().getDiseasesWithSymptomId(currentSymptom.id).size(); i++) {
             Disease thisDisease = database.getJoinerDao().getDiseasesWithSymptomId(currentSymptom.id).get(i);
-            if(database.getJoinerDao().getMainSymptomsWithDiseaseId(thisDisease.id).contains(new MainSymptom(currentSymptom.name)))
+            Log.d("TEST","mainSymptoms = "+database.getJoinerDao().getMainSymptomsWithDiseaseId(thisDisease.id));
+            Log.d("TEST","currentSymptom = "+currentSymptom);
+            if(database.getJoinerDao().getMainSymptomsWithDiseaseId(thisDisease.id).contains(currentSymptom))
             {
+                Log.d("TEST","removing" + thisDisease.name);
                 listOfAllDiseases.remove(thisDisease);
             }
 
@@ -161,8 +170,10 @@ public class PlayActivity extends AppCompatActivity {
 
     //to Be called after user answers yes to the question
     private void increaseDiseasePower(Symptom currentSymptom) {
-        positiveSymptoms.add(currentSymptom);
-        askedSymptoms.add(currentSymptom);
+        positiveSymptoms.add(currentSymptom.name);
+        askedSymptoms.add(currentSymptom.name);
+        Log.d("TEST","positive symptoms ="+positiveSymptoms);
+        Log.d("TEST","asked symptoms " +askedSymptoms);
         for (int i = 0; i < database.getJoinerDao().getDiseasesWithSymptomId(currentSymptom.id).size(); i++) {
             Disease thisDisease = database.getJoinerDao().getDiseasesWithSymptomId(currentSymptom.id).get(i);
             updatePower(thisDisease);
@@ -181,7 +192,7 @@ public class PlayActivity extends AppCompatActivity {
 
         int containedSymptoms = 0;
         for (int i= 0; i < database.getJoinerDao().getMainSymptomsWithDiseaseId(thisDisease.id).size();i++) {
-            if (askedSymptoms.contains(new Symptom(database.getJoinerDao().getMainSymptomsWithDiseaseId(thisDisease.id).get(i).name))) {
+            if (askedSymptoms.contains(new Symptom(database.getJoinerDao().getMainSymptomsWithDiseaseId(thisDisease.id).get(i).name).name)) {
                 containedSymptoms++;
             }
         }
@@ -191,8 +202,11 @@ public class PlayActivity extends AppCompatActivity {
     public void updateFinalPower(Disease askedDisease) {
 
         int containedSymptoms = 0;
+        ArrayList<String> allSymptoms = new ArrayList<>();
+        for(int i= 0; i < database.getJoinerDao().getSymptomsWithDiseaseId(askedDisease.id).size(); i++) {
+            allSymptoms.add(database.getJoinerDao().getSymptomsWithDiseaseId(askedDisease.id).get(i).name);
+        }
 
-        ArrayList<Symptom> allSymptoms = (ArrayList<Symptom>) database.getJoinerDao().getSymptomsWithDiseaseId(askedDisease.id);
 
         for (int i = 0; i < askedSymptoms.size(); i++) {
             if (allSymptoms.contains(askedSymptoms.get(i))) {
@@ -207,7 +221,7 @@ public class PlayActivity extends AppCompatActivity {
     private void createFinalMainSymptomList() {
         for(int i = 0; i<listOfAllDiseases.size(); i++) {
             for(int j = 0; j < database.getJoinerDao().getSymptomsWithDiseaseId(listOfAllDiseases.get(i).id).size(); j++) {
-                if(!askedSymptoms.contains(new Symptom(database.getJoinerDao().getSymptomsWithDiseaseId(listOfAllDiseases.get(i).id).get(j).name))) {
+                if(!askedSymptoms.contains(new Symptom(database.getJoinerDao().getSymptomsWithDiseaseId(listOfAllDiseases.get(i).id).get(j).name).name)) {
                     finalSymptoms.add(new Symptom(database.getJoinerDao().getSymptomsWithDiseaseId(listOfAllDiseases.get(i).id).get(j).name));
                 }
             }
