@@ -52,7 +52,7 @@ public class ProfilesActivity extends AppCompatActivity {
                     database.getProfileDao().deleteProfile(database.getProfileDao().getProfileWithId(profile.id));
                     updateProfileList();
 
-                } else {
+                } else if(!delete) {
                     database.getProfileDao().updateActiveAllFalse(false);
                     database.getProfileDao().updateActive(true,profile.id);
                     finish();
