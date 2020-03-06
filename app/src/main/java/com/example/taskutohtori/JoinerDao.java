@@ -6,7 +6,7 @@ import androidx.room.Query;
 import java.util.List;
 
 @Dao
-public interface JoinerDao {
+public interface JoinerDao  {
 
     @Insert
     void insertJoinerValue(Joiner... joiners);
