@@ -28,4 +28,7 @@ public interface JoinerDao  {
 
     @Query("SELECT Diseases.name FROM Diseases INNER JOIN Joiner ON Diseases.id = Joiner.diseaseId INNER JOIN Symptoms ON Joiner.symptomId = Symptoms.id WHERE Symptoms.name = :symptomName")
     List<String> getDiseasesWithSymptomName(String symptomName);
+
+    @Query("SELECT Symptoms.name FROM Symptoms INNER JOIN Joiner ON Symptoms.id = Joiner.symptomId INNER JOIN Diseases ON Joiner.diseaseId = Diseases.id")
+    List<String> getSymptomNameWithDiseaseName(String diseaseName);
 }
