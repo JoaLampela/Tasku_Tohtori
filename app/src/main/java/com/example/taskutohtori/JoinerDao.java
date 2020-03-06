@@ -30,5 +30,11 @@ public interface JoinerDao  {
     List<String> getDiseasesWithSymptomName(String symptomName);
 
     @Query("SELECT Symptoms.name FROM Symptoms INNER JOIN Joiner ON Symptoms.id = Joiner.symptomId INNER JOIN Diseases ON Joiner.diseaseId = Diseases.id")
-    List<String> getSymptomNameWithDiseaseName(String diseaseName);
+    List<String> getSymptomNamesWithDiseaseName(String diseaseName);
+
+    @Query("SELECT MainSymptoms.name FROM MainSymptoms INNER JOIN Joiner ON MainSymptoms.id = Joiner.mainSymptomId INNER JOIN Diseases ON Joiner.diseaseId = Diseases.id")
+    List<String> getMainSymptomNamesWithDiseaseName(String diseaseName);
+
+    @Query("SELECT RareSymptoms.name FROM RareSymptoms INNER JOIN Joiner ON RareSymptoms.id = Joiner.rareSymptomId INNER JOIN Diseases ON Joiner.diseaseId = Diseases.id")
+    List<String> getRareSymptomNamesWithDiseaseName(String diseaseName);
 }
