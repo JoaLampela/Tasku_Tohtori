@@ -19,6 +19,7 @@ public class MainActivity extends AppCompatActivity {
     Button exitButton;
     TextView currentProfileTV;
     DatabaseT database;
+    boolean returning;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
         exitButton = findViewById(R.id.exitButton);
         currentProfileTV = findViewById(R.id.current_profile_text);
         database = Room.databaseBuilder(MainActivity.this, DatabaseT.class, "Database").allowMainThreadQueries().fallbackToDestructiveMigration().build();
+        returning = false;
 
         //Starts profile creation activity if the app has not been opened before
         Intent firstProfileActivity = new Intent(MainActivity.this, CreateProfileActivity.class);
@@ -38,19 +40,21 @@ public class MainActivity extends AppCompatActivity {
             prefEditor.putBoolean("check", false);
             prefEditor.commit();
             startActivity(firstProfileActivity);
-            onPause();
+            returning = true;
         }
 
-        //updateCurrentProfileText();
+        if (!returning) {
+            updateCurrentProfileText();
+        }
     }
     public void onPlayButtonClick(View v) {
         startActivity(new Intent(this,PlayActivity.class));
-        onPause();
+        returning = true;
     }
 
     public void onProfilesButtonClick(View v) {
         startActivity(new Intent(this,ProfilesActivity.class));
-        onPause();
+        returning = true;
     }
     public void onExitButtonClick(View V) {
         finish();
@@ -68,11 +72,11 @@ public class MainActivity extends AppCompatActivity {
         return prefs.getInt("CurrentProfile", 1);
     }
 
-    /*public void updateCurrentProfileText() {
+    public void updateCurrentProfileText() {
         Log.d("tägi", "updateCurrentProfileText called");
         currentProfileTV.setText(database.getProfileDao().getProfileNamesWithId(currentProfile()).get(0));
         Log.d("tägi", "updateCurrentProfileText finished");
-    }*/
+    }
 
     @Override
     protected void onPause() {
@@ -84,7 +88,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         Log.d("tägi", "Main onResume called");
-        //updateCurrentProfileText();
+        updateCurrentProfileText();
+        returning = false;
         Log.d("tägi", "Main onResume finished");
     }
 }

@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.room.Room;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -16,6 +17,7 @@ import android.widget.CompoundButton;
 import android.widget.ListView;
 import android.widget.RadioGroup;
 import android.widget.Switch;
+import android.widget.Toast;
 
 public class ProfilesActivity extends AppCompatActivity {
 
@@ -47,7 +49,6 @@ public class ProfilesActivity extends AppCompatActivity {
         });
 
         profileList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
@@ -61,10 +62,18 @@ public class ProfilesActivity extends AppCompatActivity {
                     database.getProfileDao().deleteProfile(database.getProfileDao().getProfileWithId(profile.id));
                     updateProfileList();
 
-                } else {
+                } else if (!delete) {
                     putCurrentProfile();
                     finish();
+                } else {
+                    Context context = getApplicationContext();
+                    CharSequence text = "Käytössä olevaa profiilia ei voi poistaa.";
+                    int duration = Toast.LENGTH_SHORT;
+
+                    Toast toast = Toast.makeText(context, text, duration);
+                    toast.show();
                 }
+
             }
         });
     }
