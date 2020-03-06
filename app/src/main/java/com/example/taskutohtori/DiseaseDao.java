@@ -17,4 +17,7 @@ public interface DiseaseDao {
 
     @Query("SELECT Diseases.id FROM Diseases WHERE Diseases.name = :name")
     int getDiseaseIdWithName(String name);
+
+    @Query("SELECT Diseases.name FROM Diseases")
+    List<String> getAllDiseaseNames();
 }

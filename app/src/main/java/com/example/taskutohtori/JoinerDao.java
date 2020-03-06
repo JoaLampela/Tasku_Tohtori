@@ -22,4 +22,10 @@ public interface JoinerDao {
 
     @Query("SELECT * FROM RareSymptoms INNER JOIN Joiner ON RareSymptoms.id = Joiner.rareSymptomId WHERE Joiner.diseaseId = :diseaseId")
     List<RareSymptom> getRareSymptomsWithDiseaseId(int diseaseId);
+
+    @Query("SELECT MainSymptoms.name FROM MainSymptoms INNER JOIN Joiner ON MainSymptoms.id = Joiner.mainSymptomId WHERE Joiner.diseaseId = :diseaseId")
+    List<String> getMainSymptomNamesWithDiseaseId(int diseaseId);
+
+    @Query("SELECT Diseases.name FROM Diseases INNER JOIN Joiner ON Diseases.id = Joiner.diseaseId INNER JOIN Symptoms ON Joiner.symptomId = Symptoms.id WHERE Symptoms.name = :symptomName")
+    List<String> getDiseasesWithSymptomName(String symptomName);
 }

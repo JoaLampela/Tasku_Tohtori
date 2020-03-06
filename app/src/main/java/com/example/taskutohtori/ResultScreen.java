@@ -20,7 +20,7 @@ public class ResultScreen extends AppCompatActivity {
 
     }
     public void printresult(String message) {
-        if(message.equals("cured")) {
+        if(message.equals("Cured")) {
             resultBox.setText("En osaa sanoa mikä sinua vaivaa.");
         }
         else {
