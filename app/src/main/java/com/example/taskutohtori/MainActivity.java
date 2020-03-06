@@ -1,7 +1,6 @@
 package com.example.taskutohtori;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.room.Database;
 import androidx.room.Room;
 import android.app.Activity;
 import android.content.Intent;
@@ -63,16 +62,9 @@ public class MainActivity extends AppCompatActivity {
         return prefs.getBoolean("check", true);
     }
 
-    public int currentProfile() {
-        SharedPreferences prefs = getSharedPreferences("Prefs", Activity.MODE_PRIVATE);
-        return prefs.getInt("CurrentProfile", 1);
+    public void updateCurrentProfileText() {
+        currentProfileTV.setText(database.getProfileDao().getAllProfilesWithActiveStatus(true).get(0).name);
     }
-
-    /*public void updateCurrentProfileText() {
-        Log.d("tägi", "updateCurrentProfileText called");
-        currentProfileTV.setText(database.getProfileDao().getProfileNamesWithId(currentProfile()).get(0));
-        Log.d("tägi", "updateCurrentProfileText finished");
-    }*/
 
     @Override
     protected void onPause() {
@@ -84,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         Log.d("tägi", "Main onResume called");
-        //updateCurrentProfileText();
+        updateCurrentProfileText();
         Log.d("tägi", "Main onResume finished");
     }
 }

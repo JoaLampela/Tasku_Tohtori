@@ -38,13 +38,8 @@ public class CreateProfileActivity extends AppCompatActivity {
         name = nameInput.getText().toString();
         age = Integer.parseInt(ageInput.getText().toString());
         male = maleButton.isChecked();
-
-        database.getProfileDao().insertProfile(new Profile(name, age, male));
-        SharedPreferences prefs = getSharedPreferences("Prefs", Activity.MODE_PRIVATE);
-        SharedPreferences.Editor prefEditor = prefs.edit();
-        ArrayList<Profile> profiles = (ArrayList<Profile>) database.getProfileDao().getAllProfilesIDsWithAllAttributes(name, age, male);
-        prefEditor.putInt("CurrentProfile", profiles.get(0).id);
-        prefEditor.commit();
+        database.getProfileDao().updateActiveAllFalse(false);
+        database.getProfileDao().insertProfile(new Profile(name, age, male, true));
         finish();
     }
 }
