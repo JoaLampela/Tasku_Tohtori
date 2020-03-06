@@ -17,5 +17,8 @@
     <string name="main_activity_play_button">Aloita</string>
     <string name="main_activity_profiles_button">Profiilit</string>
     <string name="main_activity_exit_button">Poistu</string>
+    <string name="title_activity_loading_screen">LoadingScreenActivity</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
     <string name="profile_delete">Poista profiili</string>
 </resources>
