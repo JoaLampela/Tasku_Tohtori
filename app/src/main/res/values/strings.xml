@@ -10,4 +10,11 @@
     <string name="first_profile_confirm_button">Luo Käyttäjä</string>
     <string name="new_profile_button">Luo uusi profiili</string>
     <string name="play_activity_question">Kuuluuko oireisiisi</string>
+    <string name="result_unknown">En osaa sanoa mikä sinua vaivaa.</string>
+    <string name="result_get">Sinulla saattaa olla </string>
+    <string name="play_question">Kuuluuko oireisiisi </string>
+    <string name="question_mark">\?</string>
+    <string name="main_activity_play_button">Aloita</string>
+    <string name="main_activity_profiles_button">Profiilit</string>
+    <string name="main_activity_exit_button">Poistu</string>
 </resources>

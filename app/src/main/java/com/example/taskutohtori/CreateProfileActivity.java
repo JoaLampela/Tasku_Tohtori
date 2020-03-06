@@ -44,6 +44,7 @@ public class CreateProfileActivity extends AppCompatActivity {
         SharedPreferences.Editor prefEditor = prefs.edit();
         ArrayList<Profile> profiles = (ArrayList<Profile>) database.getProfileDao().getAllProfilesIDsWithAllAttributes(name, age, male);
         prefEditor.putInt("CurrentProfile", profiles.get(0).id);
+        prefEditor.commit();
         finish();
     }
 }

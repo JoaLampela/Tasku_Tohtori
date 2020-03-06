@@ -12,13 +12,21 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.ListView;
+import android.widget.RadioGroup;
+import android.widget.Switch;
 
 public class ProfilesActivity extends AppCompatActivity {
 
     ListView profileList;
     Button newProfile;
+    Switch deleteSwitch;
     DatabaseT database;
+    int clickedID;
+    int currentID;
+    boolean delete;
+    Profile profile;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,23 +36,52 @@ public class ProfilesActivity extends AppCompatActivity {
 
         database = Room.databaseBuilder(this, DatabaseT.class, "Database").allowMainThreadQueries().fallbackToDestructiveMigration().build();
         newProfile = findViewById(R.id.newProfileButton);
+        deleteSwitch = findViewById(R.id.deleteSwitch);
         profileList = findViewById(R.id.profileList);
-        profileList.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, database.getProfileDao().getAllProfiles()));
+        updateProfileList();
+
+        deleteSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                delete = isChecked;
+            }
+        });
 
         profileList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+                profile = (Profile) adapterView.getItemAtPosition((int) l);
+                clickedID = profile.id;
                 SharedPreferences prefs = getSharedPreferences("Prefs", Activity.MODE_PRIVATE);
-                SharedPreferences.Editor prefEditor = prefs.edit();
-                prefEditor.putInt("CurrentProfile", (int) l);
-                finish();
+                currentID = prefs.getInt("CurrentProfile", 1);
+                Log.d("tägi", "profileID " + clickedID + " currentID " + currentID);
+
+                if (!(clickedID == currentID) && delete) {
+                    database.getProfileDao().deleteProfile(database.getProfileDao().getProfileWithId(profile.id));
+                    updateProfileList();
+
+                } else {
+                    putCurrentProfile();
+                    finish();
+                }
             }
         });
     }
 
-    public void newProfile(View view) {
+    public void updateProfileList() {
+        profileList.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, database.getProfileDao().getAllProfiles()));
 
+    }
+
+    public void putCurrentProfile() {
+        SharedPreferences prefs = getSharedPreferences("Prefs", Activity.MODE_PRIVATE);
+        SharedPreferences.Editor prefEditor = prefs.edit();
+        prefEditor.putInt("CurrentProfile", profile.id);
+        prefEditor.commit();
+    }
+
+    public void newProfile(View view) {
         Intent intent = new Intent(ProfilesActivity.this, CreateProfileActivity.class);
         startActivity(intent);
         finish();

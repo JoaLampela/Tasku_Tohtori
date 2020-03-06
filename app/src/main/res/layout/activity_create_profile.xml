@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layout"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -71,6 +72,7 @@
         android:ems="10"
         android:hint="@string/first_profile_name_input"
         android:inputType="textPersonName"
+        android:nextFocusDown="@id/ageInput"
         app:layout_constraintBottom_toTopOf="@+id/ageInput"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -83,6 +85,7 @@
         android:ems="10"
         android:hint="@string/first_activity_age_input"
         android:inputType="number"
+        android:nextFocusDown="@id/layout"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
