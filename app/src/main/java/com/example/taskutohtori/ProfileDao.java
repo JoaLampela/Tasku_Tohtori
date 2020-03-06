@@ -1,6 +1,7 @@
 package com.example.taskutohtori;
 
 import androidx.room.Dao;
+import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
 
@@ -20,4 +21,10 @@ public interface ProfileDao {
 
     @Query("SELECT Profiles.name FROM Profiles WHERE Profiles.id = :id")
     List<String> getProfileNamesWithId(int id);
+
+    @Delete
+    void deleteProfile(Profile... profiles);
+
+    @Query("SELECT * FROM Profiles WHERE Profiles.id = :id")
+    Profile getProfileWithId(int id);
 }

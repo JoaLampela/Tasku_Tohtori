@@ -7,6 +7,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -62,20 +63,21 @@ public class MainActivity extends AppCompatActivity {
         return prefs.getBoolean("check", true);
     }
 
-    //Method to get the integer of the profile that was used in the last session
     public int currentProfile() {
         SharedPreferences prefs = getSharedPreferences("Prefs", Activity.MODE_PRIVATE);
         return prefs.getInt("CurrentProfile", 1);
     }
 
     public void updateCurrentProfileText() {
-        SharedPreferences prefs = getSharedPreferences("Prefs", Activity.MODE_PRIVATE);
         currentProfileTV.setText(database.getProfileDao().getProfileNamesWithId(currentProfile()).get(0));
     }
+
+    
 
     @Override
     protected void onResume() {
         super.onResume();
+        Log.d("tägi", "Main onResume called");
         updateCurrentProfileText();
     }
 }

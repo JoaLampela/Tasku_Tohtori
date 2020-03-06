@@ -142,7 +142,7 @@ public class PlayActivity extends AppCompatActivity {
             question.setText("Kuuluuko oireisiisi " + currentSymptom + "?");
         }
         else {
-            Intent intent = new Intent(this,ResultScreen.class);
+            Intent intent = new Intent(PlayActivity.this, ResultScreen.class);
             intent.putExtra(EXTRA_MESSAGE, result);
             startActivity(intent);
             finish();
