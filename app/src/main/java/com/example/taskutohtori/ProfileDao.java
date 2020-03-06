@@ -1,6 +1,7 @@
 package com.example.taskutohtori;
 
 import androidx.room.Dao;
+import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
 
@@ -17,4 +18,19 @@ public interface ProfileDao {
 
     @Query("SELECT * FROM Profiles WHERE Profiles.name LIKE :name AND Profiles.age LIKE :age AND Profiles.male LIKE :male")
     List<Profile> getAllProfilesIDsWithAllAttributes(String name, int age, boolean male);
+
+    @Query("SELECT Profiles.name FROM Profiles WHERE Profiles.id = :id")
+    List<String> getProfileNamesWithId(int id);
+
+    @Query("SELECT Profiles.age FROM Profiles WHERE Profiles.id = :id")
+    int getProfileAgeWithId(int id);
+
+    @Query("SELECT Profiles.male FROM Profiles WHERE Profiles.id = :id")
+    boolean getProfileSexWithId(int id);
+
+    @Query("SELECT * FROM Profiles WHERE Profiles.id = :id")
+    Profile getProfileWithId(int id);
+
+    @Delete
+    void deleteProfile(Profile... profiles);
 }

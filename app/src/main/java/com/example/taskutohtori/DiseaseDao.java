@@ -20,4 +20,7 @@ public interface DiseaseDao {
 
     @Query("SELECT Diseases.name FROM Diseases")
     List<String> getAllDiseaseNames();
+
+    @Query("SELECT Diseases.ageBias FROM Diseases WHERE Diseases.name = :name")
+    int getDiseaseAgeBiasWithName(String name);
 }

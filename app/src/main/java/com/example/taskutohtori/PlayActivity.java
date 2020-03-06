@@ -263,8 +263,8 @@ public class PlayActivity extends AppCompatActivity {
         database.getSymptomDao().insertSymptom(new Symptom("Kurkkukipu"));
 
         database.getJoinerDao().insertJoinerValue(new Joiner
-                (database.getDiseaseDao().getDiseaseIdWithName("Flunssa"), 
-                        database.getSymptomDao().getSymptomIdWithName("Kuume"), 
+                (database.getDiseaseDao().getDiseaseIdWithName("Flunssa"),
+                        database.getSymptomDao().getSymptomIdWithName("Kuume"),
                         database.getMainSymptomDao().getMainSymptomIdWithName("Kuume"), null));
 
         database.getJoinerDao().insertJoinerValue(new Joiner
@@ -289,6 +289,70 @@ public class PlayActivity extends AppCompatActivity {
 
         database.getJoinerDao().insertJoinerValue(new Joiner
                 (database.getDiseaseDao().getDiseaseIdWithName("Flunssa"),
+                        database.getSymptomDao().getSymptomIdWithName("Kurkkukipu"), null,
+                        database.getRareSymptomDao().getRareSymptomIdWithName("Kurkkukipu")));
+
+        database.getDiseaseDao().insertDisease(new Disease("Koronavirus", 0, 0));
+
+        database.getMainSymptomDao().insertMainSymptom(new MainSymptom("Yskä"));
+        database.getMainSymptomDao().insertMainSymptom(new MainSymptom("Lihaskipu"));
+        database.getMainSymptomDao().insertMainSymptom(new MainSymptom("Nopeasti nouseva kuume"));
+
+        database.getRareSymptomDao().insertRareSymptom(new RareSymptom("Veriyskä"));
+        database.getRareSymptomDao().insertRareSymptom(new RareSymptom("Hengenahdistus"));
+        database.getRareSymptomDao().insertRareSymptom(new RareSymptom("Nuha"));
+
+        database.getSymptomDao().insertSymptom(new Symptom("Nopeasti nouseva kuume"));
+        database.getSymptomDao().insertSymptom(new Symptom("Veriyskä"));
+        database.getSymptomDao().insertSymptom(new Symptom("Hengenahdistus"));
+
+        database.getJoinerDao().insertJoinerValue(new Joiner
+                (database.getDiseaseDao().getDiseaseIdWithName("Koronavirus"),
+                        database.getSymptomDao().getSymptomIdWithName("Kuume"),
+                        database.getMainSymptomDao().getMainSymptomIdWithName("Kuume"), null));
+
+        database.getJoinerDao().insertJoinerValue(new Joiner
+                (database.getDiseaseDao().getDiseaseIdWithName("Koronavirus"),
+                        database.getSymptomDao().getSymptomIdWithName("Nuha"),
+                        database.getMainSymptomDao().getMainSymptomIdWithName("Nuha"), null));
+
+        database.getJoinerDao().insertJoinerValue(new Joiner
+                (database.getDiseaseDao().getDiseaseIdWithName("Koronavirus"),
+                        database.getSymptomDao().getSymptomIdWithName("Lihaskipu"),
+                        database.getMainSymptomDao().getMainSymptomIdWithName("Lihaskipu"), null));
+
+        database.getJoinerDao().insertJoinerValue(new Joiner
+                (database.getDiseaseDao().getDiseaseIdWithName("Koronavirus"),
+                        database.getSymptomDao().getSymptomIdWithName("Yskä"),
+                        database.getMainSymptomDao().getMainSymptomIdWithName("Yskä"), null));
+
+        database.getJoinerDao().insertJoinerValue(new Joiner
+                (database.getDiseaseDao().getDiseaseIdWithName("Koronavirus"),
+                        database.getSymptomDao().getSymptomIdWithName("Nopeasti nouseva kuume"),
+                        database.getMainSymptomDao().getMainSymptomIdWithName("Nopeasti nouseva kuume"), null));
+
+        database.getJoinerDao().insertJoinerValue(new Joiner
+                (database.getDiseaseDao().getDiseaseIdWithName("Koronavirus"),
+                        database.getSymptomDao().getSymptomIdWithName("Nuha"), null,
+                        database.getRareSymptomDao().getRareSymptomIdWithName("Nuha")));
+
+        database.getJoinerDao().insertJoinerValue(new Joiner
+                (database.getDiseaseDao().getDiseaseIdWithName("Koronavirus"),
+                        database.getSymptomDao().getSymptomIdWithName("Hengenahdistus"), null,
+                        database.getRareSymptomDao().getRareSymptomIdWithName("Hengenahdistus")));
+
+        database.getJoinerDao().insertJoinerValue(new Joiner
+                (database.getDiseaseDao().getDiseaseIdWithName("Koronavirus"),
+                        database.getSymptomDao().getSymptomIdWithName("Veriyskä"), null,
+                        database.getRareSymptomDao().getRareSymptomIdWithName("Veriyskä")));
+
+        database.getJoinerDao().insertJoinerValue(new Joiner
+                (database.getDiseaseDao().getDiseaseIdWithName("Koronavirus"),
+                        database.getSymptomDao().getSymptomIdWithName("Tukkoisuus"), null,
+                        database.getRareSymptomDao().getRareSymptomIdWithName("Tukkoisuus")));
+
+        database.getJoinerDao().insertJoinerValue(new Joiner
+                (database.getDiseaseDao().getDiseaseIdWithName("Koronavirus"),
                         database.getSymptomDao().getSymptomIdWithName("Kurkkukipu"), null,
                         database.getRareSymptomDao().getRareSymptomIdWithName("Kurkkukipu")));
     }
