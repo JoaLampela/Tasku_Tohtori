@@ -38,27 +38,27 @@ public class MainActivity extends AppCompatActivity {
             prefEditor.putBoolean("check", false);
             prefEditor.commit();
             startActivity(firstProfileActivity);
+            onPause();
         }
 
-        updateCurrentProfileText();
+        //updateCurrentProfileText();
     }
     public void onPlayButtonClick(View v) {
         startActivity(new Intent(this,PlayActivity.class));
+        onPause();
     }
 
     public void onProfilesButtonClick(View v) {
-
         startActivity(new Intent(this,ProfilesActivity.class));
+        onPause();
     }
     public void onExitButtonClick(View V) {
-
         finish();
         System.exit(0);
     }
 
     //Checking if the app has been launched before from a boolean value saved to SharedPreferences
     public boolean firstStartCheck() {
-
         SharedPreferences prefs = getSharedPreferences("Prefs", Activity.MODE_PRIVATE);
         return prefs.getBoolean("check", true);
     }
@@ -68,16 +68,23 @@ public class MainActivity extends AppCompatActivity {
         return prefs.getInt("CurrentProfile", 1);
     }
 
-    public void updateCurrentProfileText() {
+    /*public void updateCurrentProfileText() {
+        Log.d("tägi", "updateCurrentProfileText called");
         currentProfileTV.setText(database.getProfileDao().getProfileNamesWithId(currentProfile()).get(0));
-    }
+        Log.d("tägi", "updateCurrentProfileText finished");
+    }*/
 
-    
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Log.d("tägi", "Main onPause called");
+    }
 
     @Override
     protected void onResume() {
         super.onResume();
         Log.d("tägi", "Main onResume called");
-        updateCurrentProfileText();
+        //updateCurrentProfileText();
+        Log.d("tägi", "Main onResume finished");
     }
 }

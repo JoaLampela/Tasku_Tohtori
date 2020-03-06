@@ -27,4 +27,7 @@ public interface ProfileDao {
 
     @Query("SELECT * FROM Profiles WHERE Profiles.id = :id")
     Profile getProfileWithId(int id);
+
+    @Query("SELECT Profiles.id FROM Profiles")
+    List<Integer> getAllIds();
 }
