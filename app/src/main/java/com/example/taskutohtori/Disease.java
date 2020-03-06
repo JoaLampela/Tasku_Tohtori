@@ -1,9 +1,11 @@
 package com.example.taskutohtori;
 
 import androidx.room.Entity;
+import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
-@Entity(tableName = "Diseases")
+@Entity(tableName = "Diseases",
+        indices = {@Index(value = {"name"}, unique = true)})
 public class Disease {
 
     @PrimaryKey(autoGenerate = true)
