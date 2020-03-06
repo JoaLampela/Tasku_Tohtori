@@ -231,10 +231,10 @@ public class PlayActivity extends AppCompatActivity {
     }
 
     private void calculateResult() {
-        float bestResult = -9001;
+        float bestResult = 0;
         for (int i= 0; i < listOfAllDiseases.size(); i++) {
             updateFinalPower(listOfAllDiseases.get(i));
-            if(powerMap.get(listOfAllDiseases.get(i)) >= bestResult) {
+            if(powerMap.get(listOfAllDiseases.get(i)) > bestResult) {
                 result = listOfAllDiseases.get(i);
                 bestResult = powerMap.get(listOfAllDiseases.get(i));
             }
