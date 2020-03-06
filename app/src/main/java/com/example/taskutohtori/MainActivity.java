@@ -70,12 +70,6 @@ public class MainActivity extends AppCompatActivity {
         currentProfileTV.setText(database.getProfileDao().getAllProfilesWithActiveStatus(true).get(0).name);
     }
 
-    /*public void updateCurrentProfileText() {
-        Log.d("tägi", "updateCurrentProfileText called");
-        currentProfileTV.setText(database.getProfileDao().getProfileNamesWithId(currentProfile()).get(0));
-        Log.d("tägi", "updateCurrentProfileText finished");
-    }*/
-
     @Override
     protected void onPause() {
         super.onPause();

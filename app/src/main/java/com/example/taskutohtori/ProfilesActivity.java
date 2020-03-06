@@ -6,6 +6,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -22,14 +23,11 @@ public class ProfilesActivity extends AppCompatActivity {
     Button newProfile;
     Switch deleteSwitch;
     DatabaseT database;
-    int clickedID;
-    int currentID;
     boolean delete;
     Profile profile;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profiles);
 
@@ -51,22 +49,34 @@ public class ProfilesActivity extends AppCompatActivity {
 
                 profile = (Profile) adapterView.getAdapter().getItem((int) l);
 
-                if (!(profile.active) && delete) {
+                if (!(profile.active) && delete && database.getProfileDao().getAllProfiles().size() > 1) {
                     database.getProfileDao().deleteProfile(database.getProfileDao().getProfileWithId(profile.id));
                     updateProfileList();
+
+                    Context context = getApplicationContext();
+                    CharSequence text = "Profiili poistettu:  " + profile.name;
+                    int duration = Toast.LENGTH_SHORT;
+                    Toast toast = Toast.makeText(context, text, duration);
+                    toast.setGravity(Gravity.BOTTOM, 0, 300);
+                    toast.show();
 
                 } else if(!delete) {
                     database.getProfileDao().updateActiveAllFalse(false);
                     database.getProfileDao().updateActive(true,profile.id);
-                } else if (!delete) {
-                    putCurrentProfile();
-                    finish();
+
+                    Context context = getApplicationContext();
+                    CharSequence text = "Valittu profiili:  " + profile.name;
+                    int duration = Toast.LENGTH_SHORT;
+                    Toast toast = Toast.makeText(context, text, duration);
+                    toast.setGravity(Gravity.BOTTOM, 0, 300);
+                    toast.show();
+
                 } else {
                     Context context = getApplicationContext();
                     CharSequence text = "Käytössä olevaa profiilia ei voi poistaa.";
                     int duration = Toast.LENGTH_SHORT;
-
                     Toast toast = Toast.makeText(context, text, duration);
+                    toast.setGravity(Gravity.BOTTOM, 0, 300);
                     toast.show();
                 }
 
@@ -76,7 +86,6 @@ public class ProfilesActivity extends AppCompatActivity {
 
     public void updateProfileList() {
         profileList.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, database.getProfileDao().getAllProfiles()));
-
     }
 
     public void newProfile(View view) {
