@@ -32,6 +32,7 @@ public class PlayActivity extends AppCompatActivity {
     boolean declareDisease;
     DatabaseT database;
     HashMap<String, Float> powerMap;
+    DataBaseManager DBM;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,13 +41,14 @@ public class PlayActivity extends AppCompatActivity {
 
         database = Room.databaseBuilder(this, DatabaseT.class, "Database").allowMainThreadQueries().fallbackToDestructiveMigration().build();
         createDiseases();
+        DBM = new DataBaseManager(this);
 
         yesButton = findViewById(R.id.yesButton);
         noButton = findViewById(R.id.noButton);
         unsureButton = findViewById(R.id.unsureButton);
         question = findViewById(R.id.question);
         thisImageManager = new ImageManager();
-        listOfAllDiseases = (ArrayList<String>) database.getDiseaseDao().getAllDiseaseNames();
+        listOfAllDiseases = DBM.getAllDiseases();
         positiveSymptoms = new ArrayList<>();
         askedSymptoms = new ArrayList<>();
         finalSymptoms = new ArrayList<>();
@@ -107,10 +109,9 @@ public class PlayActivity extends AppCompatActivity {
             }
         }
         if(nextDisease != null) {
-            for(int i = 0; i < database.getJoinerDao().getMainSymptomsWithDiseaseId(database.getDiseaseDao().getDiseaseIdWithName(nextDisease)).size(); i++) {
-                Log.d("TEST","name test"+ database.getJoinerDao().getMainSymptomsWithDiseaseId(database.getDiseaseDao().getDiseaseIdWithName(nextDisease)).get(i).name);
-                if (!positiveSymptoms.contains(new Symptom(database.getJoinerDao().getMainSymptomsWithDiseaseId(database.getDiseaseDao().getDiseaseIdWithName(nextDisease)).get(i).name).name)) {
-                    return new Symptom(database.getJoinerDao().getMainSymptomsWithDiseaseId(database.getDiseaseDao().getDiseaseIdWithName(nextDisease)).get(i).name).name;
+            for(int i = 0; i < DBM.getSizeOfMainSymptoms(nextDisease); i++) {
+                if (!positiveSymptoms.contains(DBM.getMainSymptoms(nextDisease).get(i))) {
+                    return DBM.getMainSymptoms(nextDisease).get(i);
                 }
             }
         }
@@ -154,13 +155,15 @@ public class PlayActivity extends AppCompatActivity {
 
         askedSymptoms.add(currentSymptom);
         Log.d("TEST","curren Symptom" +currentSymptom);
-        Log.d("TEST","curren Symptom" +database.getJoinerDao().getDiseasesWithSymptomName(currentSymptom));
-        Log.d("TEST","lenght" + database.getJoinerDao().getDiseasesWithSymptomName(currentSymptom).size());
-        for (int i = 0; i < database.getJoinerDao().getDiseasesWithSymptomName(currentSymptom).size(); i++) {
-            String thisDisease = database.getJoinerDao().getDiseasesWithSymptomName(currentSymptom).get(i);
-            Log.d("TEST","mainSymptoms = "+database.getJoinerDao().getMainSymptomsWithDiseaseId(database.getDiseaseDao().getDiseaseIdWithName(thisDisease)));
+        Log.d("TEST","curren Symptom" +DBM.getDiseases(currentSymptom));
+        Log.d("TEST","lenght" + DBM.getDiseases(currentSymptom));
+        for (int i = 0; i < DBM.getSizeOfDiseases(currentSymptom); i++) {
+            String thisDisease = DBM.getDiseases(currentSymptom).get(i);
+            Log.d("TEST","mainSymptoms = "+DBM.getMainSymptoms(thisDisease));
             Log.d("TEST","currentSymptom = "+currentSymptom);
-            if(database.getJoinerDao().getMainSymptomNamesWithDiseaseId(database.getDiseaseDao().getDiseaseIdWithName(thisDisease)).contains(currentSymptom))
+            Log.d("TEST","" +DBM.getMainSymptoms(thisDisease));
+            Log.d("TEST","" +currentSymptom);
+            if(DBM.getMainSymptoms(thisDisease).contains(currentSymptom))
             {
                 Log.d("TEST","removing" + thisDisease);
                 listOfAllDiseases.remove(thisDisease);
@@ -175,8 +178,8 @@ public class PlayActivity extends AppCompatActivity {
         askedSymptoms.add(currentSymptom);
         Log.d("TEST","positive symptoms ="+positiveSymptoms);
         Log.d("TEST","asked symptoms " +askedSymptoms);
-        for (int i = 0; i < database.getJoinerDao().getDiseasesWithSymptomId(database.getDiseaseDao().getDiseaseIdWithName(currentSymptom)).size(); i++) {
-            String thisDisease = database.getJoinerDao().getDiseasesWithSymptomId(database.getDiseaseDao().getDiseaseIdWithName(currentSymptom)).get(i).name;
+        for (int i = 0; i < DBM.getSizeOfDiseases(currentSymptom); i++) {
+            String thisDisease = DBM.getDiseases(currentSymptom).get(i);
             updatePower(thisDisease);
         }
     }
@@ -191,22 +194,21 @@ public class PlayActivity extends AppCompatActivity {
     public void updatePower(String thisDisease) {
 
         int containedSymptoms = 0;
-        for (int i= 0; i < database.getJoinerDao().getMainSymptomsWithDiseaseId(database.getDiseaseDao().getDiseaseIdWithName(thisDisease)).size();i++) {
-            if (askedSymptoms.contains(new Symptom(database.getJoinerDao().getMainSymptomsWithDiseaseId(database.getDiseaseDao().getDiseaseIdWithName(thisDisease)).get(i).name).name)) {
+        for (int i= 0; i < DBM.getSizeOfMainSymptoms(thisDisease);i++) {
+            if (askedSymptoms.contains(DBM.getMainSymptoms(thisDisease).get(i))) {
                 containedSymptoms++;
             }
         }
-        powerMap.put(thisDisease, (float) containedSymptoms/database.getJoinerDao().getMainSymptomsWithDiseaseId(database.getDiseaseDao().getDiseaseIdWithName(thisDisease)).size());
+        powerMap.put(thisDisease, (float) containedSymptoms/DBM.getSizeOfMainSymptoms(thisDisease));
     }
 
     public void updateFinalPower(String askedDisease) {
 
         int containedSymptoms = 0;
         ArrayList<String> allSymptoms = new ArrayList<>();
-        for(int i= 0; i < database.getJoinerDao().getSymptomsWithDiseaseId(database.getDiseaseDao().getDiseaseIdWithName(askedDisease)).size(); i++) {
-            allSymptoms.add(database.getJoinerDao().getSymptomsWithDiseaseId(database.getDiseaseDao().getDiseaseIdWithName(askedDisease)).get(i).name);
+        for(int i= 0; i < DBM.getSizeOfSymptoms(askedDisease); i++) {
+            allSymptoms.add(DBM.getSymptoms(askedDisease).get(i));
         }
-
 
         for (int i = 0; i < askedSymptoms.size(); i++) {
             if (allSymptoms.contains(askedSymptoms.get(i))) {
@@ -220,9 +222,9 @@ public class PlayActivity extends AppCompatActivity {
 
     private void createFinalMainSymptomList() {
         for(int i = 0; i<listOfAllDiseases.size(); i++) {
-            for(int j = 0; j < database.getJoinerDao().getSymptomsWithDiseaseId(database.getDiseaseDao().getDiseaseIdWithName(listOfAllDiseases.get(i))).size(); j++) {
-                if(!askedSymptoms.contains(new Symptom(database.getJoinerDao().getSymptomsWithDiseaseId(database.getDiseaseDao().getDiseaseIdWithName(listOfAllDiseases.get(i))).get(j).name).name)) {
-                    finalSymptoms.add(new Symptom(database.getJoinerDao().getSymptomsWithDiseaseId(database.getDiseaseDao().getDiseaseIdWithName(listOfAllDiseases.get(i))).get(j).name).name);
+            for(int j = 0; j < DBM.getSizeOfSymptoms(listOfAllDiseases.get(i)); j++) {
+                if(!askedSymptoms.contains(DBM.getSymptoms(listOfAllDiseases.get(i)).get(j))) {
+                    finalSymptoms.add(DBM.getSymptoms(listOfAllDiseases.get(i)).get(j));
                 }
             }
         }
