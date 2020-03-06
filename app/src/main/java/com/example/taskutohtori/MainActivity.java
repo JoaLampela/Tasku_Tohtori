@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
             startActivity(firstProfileActivity);
         }
 
-        currentProfileTV.setText(database.getProfileDao().getProfileNamesWithId(currentProfile()).get(0));
+        updateCurrentProfileText();
     }
     public void onPlayButtonClick(View v) {
         startActivity(new Intent(this,PlayActivity.class));
@@ -66,5 +66,16 @@ public class MainActivity extends AppCompatActivity {
     public int currentProfile() {
         SharedPreferences prefs = getSharedPreferences("Prefs", Activity.MODE_PRIVATE);
         return prefs.getInt("CurrentProfile", 1);
+    }
+
+    public void updateCurrentProfileText() {
+        SharedPreferences prefs = getSharedPreferences("Prefs", Activity.MODE_PRIVATE);
+        currentProfileTV.setText(database.getProfileDao().getProfileNamesWithId(currentProfile()).get(0));
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        updateCurrentProfileText();
     }
 }

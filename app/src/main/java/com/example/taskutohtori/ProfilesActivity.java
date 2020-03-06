@@ -37,7 +37,8 @@ public class ProfilesActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 SharedPreferences prefs = getSharedPreferences("Prefs", Activity.MODE_PRIVATE);
                 SharedPreferences.Editor prefEditor = prefs.edit();
-                prefEditor.putInt("CurrentProfile", (int) l);
+                prefEditor.putInt("CurrentProfile", (int) l + 1);
+                prefEditor.commit();
                 finish();
             }
         });
