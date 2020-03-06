@@ -17,4 +17,7 @@ public interface ProfileDao {
 
     @Query("SELECT * FROM Profiles WHERE Profiles.name LIKE :name AND Profiles.age LIKE :age AND Profiles.male LIKE :male")
     List<Profile> getAllProfilesIDsWithAllAttributes(String name, int age, boolean male);
+
+    @Query("SELECT Profiles.name FROM Profiles WHERE Profiles.id = :id")
+    List<String> getProfileNamesWithId(int id);
 }

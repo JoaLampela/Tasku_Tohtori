@@ -17,4 +17,17 @@ public class Profile {
         this.age = age;
         this.male = male;
     }
+
+    public String getSexString() {
+        if (this.male) {
+            return "Mies";
+        } else {
+            return "Nainen";
+        }
+    }
+
+    @Override
+    public String toString() {
+        return this.name + ", " + this.age + ", " + getSexString();
+    }
 }

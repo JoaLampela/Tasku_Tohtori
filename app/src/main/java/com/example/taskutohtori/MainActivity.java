@@ -1,6 +1,7 @@
 package com.example.taskutohtori;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.room.Database;
 import androidx.room.Room;
 import android.app.Activity;
 import android.content.Intent;
@@ -8,12 +9,15 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
     Button playButton;
     Button profilesButton;
     Button exitButton;
+    TextView currentProfileTV;
+    DatabaseT database;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,9 +26,10 @@ public class MainActivity extends AppCompatActivity {
         playButton = findViewById(R.id.playButton);
         profilesButton = findViewById(R.id.profilesButton);
         exitButton = findViewById(R.id.exitButton);
+        currentProfileTV = findViewById(R.id.current_profile_text);
+        database = Room.databaseBuilder(MainActivity.this, DatabaseT.class, "Database").allowMainThreadQueries().fallbackToDestructiveMigration().build();
 
         //Starts profile creation activity if the app has not been opened before
-        //Else imports previously saved profile data from SharedPreferences to ProfileSingleton
         Intent firstProfileActivity = new Intent(MainActivity.this, CreateProfileActivity.class);
         if (firstStartCheck()) {
             SharedPreferences prefs = getSharedPreferences("Prefs", Activity.MODE_PRIVATE);
@@ -33,6 +38,8 @@ public class MainActivity extends AppCompatActivity {
             prefEditor.commit();
             startActivity(firstProfileActivity);
         }
+
+        currentProfileTV.setText(database.getProfileDao().getProfileNamesWithId(currentProfile()).get(0));
     }
     public void onPlayButtonClick(View v) {
         startActivity(new Intent(this,PlayActivity.class));
@@ -57,15 +64,7 @@ public class MainActivity extends AppCompatActivity {
 
     //Method to get the integer of the profile that was used in the last session
     public int currentProfile() {
-
         SharedPreferences prefs = getSharedPreferences("Prefs", Activity.MODE_PRIVATE);
-        return prefs.getInt("CurrentProfile", 0);
-    }
-
-    //Importing profile data from SharedPreferences to ProfileSingleton
-    public int prefGet() {
-
-        SharedPreferences prefs = getSharedPreferences("Prefs", Activity.MODE_PRIVATE);
-        return prefs.getInt("CurrentProfile", 0);
+        return prefs.getInt("CurrentProfile", 1);
     }
 }
