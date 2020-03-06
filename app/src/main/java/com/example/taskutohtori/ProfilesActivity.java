@@ -2,13 +2,10 @@ package com.example.taskutohtori;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.room.Room;
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -52,16 +49,15 @@ public class ProfilesActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
-                profile = (Profile) adapterView.getItemAtPosition((int) l);
-                clickedID = profile.id;
-                SharedPreferences prefs = getSharedPreferences("Prefs", Activity.MODE_PRIVATE);
-                currentID = prefs.getInt("CurrentProfile", 1);
-                Log.d("tägi", "profileID " + clickedID + " currentID " + currentID);
+                profile = (Profile) adapterView.getAdapter().getItem((int) l);
 
-                if (!(clickedID == currentID) && delete) {
+                if (!(profile.active) && delete) {
                     database.getProfileDao().deleteProfile(database.getProfileDao().getProfileWithId(profile.id));
                     updateProfileList();
 
+                } else if(!delete) {
+                    database.getProfileDao().updateActiveAllFalse(false);
+                    database.getProfileDao().updateActive(true,profile.id);
                 } else if (!delete) {
                     putCurrentProfile();
                     finish();
@@ -81,13 +77,6 @@ public class ProfilesActivity extends AppCompatActivity {
     public void updateProfileList() {
         profileList.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, database.getProfileDao().getAllProfiles()));
 
-    }
-
-    public void putCurrentProfile() {
-        SharedPreferences prefs = getSharedPreferences("Prefs", Activity.MODE_PRIVATE);
-        SharedPreferences.Editor prefEditor = prefs.edit();
-        prefEditor.putInt("CurrentProfile", profile.id);
-        prefEditor.commit();
     }
 
     public void newProfile(View view) {
