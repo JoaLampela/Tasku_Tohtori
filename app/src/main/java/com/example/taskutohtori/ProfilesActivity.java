@@ -26,6 +26,7 @@ public class ProfilesActivity extends AppCompatActivity {
     DatabaseT database;
     boolean delete;
     Profile profile;
+    Toast toast;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +37,7 @@ public class ProfilesActivity extends AppCompatActivity {
         newProfile = findViewById(R.id.newProfileButton);
         deleteSwitch = findViewById(R.id.deleteSwitch);
         profileList = findViewById(R.id.profileList);
+        toast = Toast.makeText(this, "", Toast.LENGTH_SHORT);
         updateProfileList();
 
         deleteSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -54,36 +56,35 @@ public class ProfilesActivity extends AppCompatActivity {
                     database.getProfileDao().deleteProfile(database.getProfileDao().getProfileWithId(profile.id));
                     updateProfileList();
 
-                    Context context = getApplicationContext();
-                    CharSequence text = "Profiili poistettu:  " + profile.name;
-                    int duration = Toast.LENGTH_SHORT;
-                    Toast toast = Toast.makeText(context, text, duration);
-                    toast.setGravity(Gravity.BOTTOM, 0, 300);
-                    toast.show();
+                    cancelToast();
+                    updateToast("Profiili poistettu:  " + profile.name);
 
                 } else if(!delete) {
                     database.getProfileDao().updateActiveAllFalse(false);
                     database.getProfileDao().updateActive(true,profile.id);
                     updateProfileList();
 
-                    Context context = getApplicationContext();
-                    CharSequence text = "Valittu profiili:  " + profile.name;
-                    int duration = Toast.LENGTH_SHORT;
-                    Toast toast = Toast.makeText(context, text, duration);
-                    toast.setGravity(Gravity.BOTTOM, 0, 300);
-                    toast.show();
+                    cancelToast();
+                    updateToast("Valittu profiili:  " + profile.name);
 
                 } else {
-                    Context context = getApplicationContext();
-                    CharSequence text = "Käytössä olevaa profiilia ei voi poistaa.";
-                    int duration = Toast.LENGTH_SHORT;
-                    Toast toast = Toast.makeText(context, text, duration);
-                    toast.setGravity(Gravity.BOTTOM, 0, 300);
-                    toast.show();
+                    cancelToast();
+                    updateToast("Käytössä olevaa profiilia ei voi poistaa.");
                 }
 
             }
         });
+    }
+
+    public void cancelToast() {
+        toast.cancel();
+        toast = Toast.makeText(this, "", Toast.LENGTH_SHORT);
+        toast.setGravity(Gravity.BOTTOM, 0, 300);
+    }
+
+    public void updateToast(String string) {
+        toast.setText(string);
+        toast.show();
     }
 
     public void updateProfileList() {
