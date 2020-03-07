@@ -17,22 +17,22 @@ import static java.lang.StrictMath.abs;
 public class PlayActivity extends AppCompatActivity {
     public final static String EXTRA_MESSAGE = "com.example.myfirstapp.MESSAGE";
 
-    DatabaseT database;
-    DataBaseManager DBM;
+    private DatabaseT database;
+    private DataBaseManager DBM;
 
     Button yesButton;
     Button noButton;
     TextView question;
     ImageManager thisImageManager;
 
-    ArrayList<String> listOfAllDiseases;
-    ArrayList<String> positiveSymptoms;
-    ArrayList<String> askedSymptoms;
-    ArrayList<String> finalSymptoms;
-    HashMap<String, Float> powerMap;
+    private ArrayList<String> listOfAllDiseases;
+    private ArrayList<String> positiveSymptoms;
+    private ArrayList<String> askedSymptoms;
+    private ArrayList<String> finalSymptoms;
+    private HashMap<String, Float> powerMap;
 
-    String currentSymptom;
-    String result;
+    private String currentSymptom;
+    private String result;
     boolean allMainQuestionsAsked;
     boolean declareDisease;
 
@@ -81,7 +81,7 @@ public class PlayActivity extends AppCompatActivity {
         updateUI();
     }
 
-    public void newQuestion() {
+    private void newQuestion() {
         
         if(!allMainQuestionsAsked) {
             currentSymptom = newMainQuestion();
@@ -99,7 +99,7 @@ public class PlayActivity extends AppCompatActivity {
         }
     }
 
-    public String newMainQuestion() {
+    private String newMainQuestion() {
 
         float maxPower = 0;
         String nextDisease = null;
@@ -126,7 +126,7 @@ public class PlayActivity extends AppCompatActivity {
         return (newRareQuestion());
     }
 
-    public String newRareQuestion() {
+    private String newRareQuestion() {
         if(!finalSymptoms.isEmpty()) {
             currentSymptom = finalSymptoms.get(0);
             finalSymptoms.remove(finalSymptoms.get(0));
@@ -177,14 +177,14 @@ public class PlayActivity extends AppCompatActivity {
     }
 
     //gives power values for each disease
-    public void createPower() {
+    private void createPower() {
         for(int i = 0; i < listOfAllDiseases.size(); i++) {
             powerMap.put(listOfAllDiseases.get(i), (float) 0.0);
         }
     }
 
     //updates disease's power
-    public void updatePower(String thisDisease) {
+    private void updatePower(String thisDisease) {
         int containedSymptoms = 0;
         for (int i = 0; i < DBM.getSizeOfMainSymptoms(thisDisease); i++) {
             if (askedSymptoms.contains(DBM.getMainSymptoms(thisDisease).get(i))) {
@@ -195,7 +195,7 @@ public class PlayActivity extends AppCompatActivity {
     }
 
     //need to add age and sex bonuses back
-    public void updateFinalPower(String askedDisease) {
+    private void updateFinalPower(String askedDisease) {
 
         int containedSymptoms = 0;
         ArrayList<String> allSymptoms = new ArrayList<>();
@@ -239,7 +239,7 @@ public class PlayActivity extends AppCompatActivity {
         return abs(ageGroup-ageBias)+1;
     }
 
-    //calculates sexBonus for updteFinalPower
+    //calculates sexBonus for updateFinalPower
     private float sexBonus(String disease) {
         boolean isMale = DBM.getIsMale();
         float sexBias = DBM.getSexBias(disease);

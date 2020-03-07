@@ -39,6 +39,12 @@ public class Profile {
 
     @Override
     public String toString() {
-        return this.name + ", " + this.age + ", " + getSexString();
+        return this.name + ", " + this.age + ", " + getSexString() +"                 "+ activeText();
+    }
+    private String activeText() {
+        if (this.active) {
+            return "Aktiivinen profiili";
+        }
+        return "";
     }
 }
