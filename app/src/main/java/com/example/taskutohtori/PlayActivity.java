@@ -1,7 +1,6 @@
 package com.example.taskutohtori;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.room.Ignore;
 import androidx.room.Room;
 import android.content.Intent;
 import android.os.Bundle;
@@ -23,7 +22,6 @@ public class PlayActivity extends AppCompatActivity {
 
     Button yesButton;
     Button noButton;
-    Button unsureButton;
     TextView question;
     ImageManager thisImageManager;
 
@@ -52,7 +50,6 @@ public class PlayActivity extends AppCompatActivity {
 
         yesButton = findViewById(R.id.yesButton);
         noButton = findViewById(R.id.noButton);
-        unsureButton = findViewById(R.id.unsureButton);
         question = findViewById(R.id.question);
         thisImageManager = new ImageManager();
 
@@ -81,11 +78,6 @@ public class PlayActivity extends AppCompatActivity {
             removeDiseases(currentSymptom);
         }
         newQuestion();
-        updateUI();
-    }
-
-    //removable?
-    public void onUnsureButton(View v) {
         updateUI();
     }
 
@@ -220,6 +212,7 @@ public class PlayActivity extends AppCompatActivity {
         powerMap.put(askedDisease, (float) containedSymptoms * ageBonus(askedDisease) * sexBonus(askedDisease) / allSymptoms.size());
     }
 
+    //calculates ageBonus for updateFinalPower
     private float ageBonus(String disease) {
         float ageBias = DBM.getAgeBias(disease);
         int age = DBM.getAge();
@@ -246,6 +239,7 @@ public class PlayActivity extends AppCompatActivity {
         return abs(ageGroup-ageBias)+1;
     }
 
+    //calculates sexBonus for updteFinalPower
     private float sexBonus(String disease) {
         boolean isMale = DBM.getIsMale();
         float sexBias = DBM.getSexBias(disease);
