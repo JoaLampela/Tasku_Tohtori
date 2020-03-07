@@ -274,6 +274,9 @@ public class PlayActivity extends AppCompatActivity {
 
         database.clearAllTables();
 
+        //Placeholder
+        database.getProfileDao().insertProfile(new Profile("Joa Lampela", 21, true, true));
+
         database.getDiseaseDao().insertDisease(new Disease("Flunssa", 0, 0));
 
         database.getMainSymptomDao().insertMainSymptom(new MainSymptom("Kuume"));

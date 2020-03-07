@@ -1,133 +1,91 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/layout"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
     tools:context=".CreateProfileActivity">
 
-    <TextView
-        android:id="@+id/nameText"
-        android:layout_width="wrap_content"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/name_input_layout"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/first_profile_name_text"
-        android:textSize="24sp"
-        app:layout_constraintBottom_toTopOf="@+id/nameInputLayout"
-        app:layout_constraintStart_toStartOf="@+id/nameInputLayout" />
+        android:paddingTop="100dp"
+        app:counterEnabled="true"
+        app:counterMaxLength="20"
+        app:errorEnabled="true">
 
-    <TextView
-        android:id="@+id/ageText"
-        android:layout_width="wrap_content"
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/first_profile_name_text"
+            android:inputType="text">
+
+        </com.google.android.material.textfield.TextInputEditText>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/age_input_layout"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/first_activity_age_text"
-        android:textSize="24sp"
-        app:layout_constraintBottom_toTopOf="@+id/ageInputLayout"
-        app:layout_constraintStart_toStartOf="@+id/ageInputLayout" />
+        android:paddingTop="50dp"
+        app:errorEnabled="true">
 
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/first_activity_age_text"
+            android:inputType="number">
 
-    <TextView
-        android:id="@+id/sexText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/first_activity_sex_text"
-        android:textSize="24sp"
-        app:layout_constraintBottom_toTopOf="@+id/guideline4"
-        app:layout_constraintStart_toStartOf="@+id/ageInputLayout" />
+        </com.google.android.material.textfield.TextInputEditText>
+
+    </com.google.android.material.textfield.TextInputLayout>
 
     <RadioGroup
-        android:id="@+id/RadioGroup"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        app:layout_constraintStart_toStartOf="@+id/sexText"
-        app:layout_constraintTop_toBottomOf="@+id/sexText">
+        android:paddingLeft="50dp"
+        android:paddingTop="50dp"
+        android:paddingRight="50dp"
+        android:paddingBottom="50dp">
 
-        <RadioButton
-            android:id="@+id/femaleButton"
-            android:layout_width="wrap_content"
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/first_profile_sex_female"
-            android:textSize="18sp"
-            app:layout_constraintStart_toStartOf="@+id/sexText"
-            app:layout_constraintTop_toBottomOf="@+id/maleButton" />
+            android:paddingBottom="10dp"
+            android:text="@string/first_activity_sex_text"
+            android:textSize="18sp" />
 
         <RadioButton
             android:id="@+id/maleButton"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="@string/first_profile_sex_male"
-            android:textSize="18sp"
-            app:layout_constraintStart_toStartOf="@+id/sexText"
-            app:layout_constraintTop_toBottomOf="@+id/sexText" />
+            android:text="@string/first_profile_sex_male">
+
+        </RadioButton>
+
+        <RadioButton
+            android:id="@+id/femaleButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/first_profile_sex_female">
+
+        </RadioButton>
+
     </RadioGroup>
-
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.2" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.64" />
 
     <Button
         android:id="@+id/confirmButton"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:onClick="createUser"
-        android:text="@string/first_profile_confirm_button"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guideline4" />
+        android:text="@string/first_profile_confirm_button">
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/ageInputLayout"
-        android:layout_width="210dp"
-        android:layout_height="wrap_content"
-        app:errorEnabled="true"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+    </Button>
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/ageInputEditText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/first_activity_age_input"
-            android:inputType="number"
-            android:nextFocusDown="@id/layout"
-            android:nextFocusForward="@id/layout"
-            android:singleLine="true" />
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/nameInputLayout"
-        android:layout_width="210dp"
-        android:layout_height="wrap_content"
-        app:errorEnabled="true"
-        app:layout_constraintBottom_toTopOf="@+id/ageInputLayout"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guideline2">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/nameInputEditText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/first_profile_name_input"
-            android:nextFocusDown="@id/ageInputEditText"
-            android:nextFocusForward="@id/layout"
-            android:singleLine="true" />
-    </com.google.android.material.textfield.TextInputLayout>
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>
