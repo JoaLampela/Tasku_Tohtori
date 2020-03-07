@@ -56,7 +56,6 @@ public class ProfilesActivity extends AppCompatActivity {
                     database.getProfileDao().deleteProfile(database.getProfileDao().getProfileWithId(profile.id));
                     updateProfileList();
 
-                    cancelToast();
                     updateToast("Profiili poistettu:  " + profile.name);
 
                 } else if(!delete) {
@@ -64,11 +63,9 @@ public class ProfilesActivity extends AppCompatActivity {
                     database.getProfileDao().updateActive(true,profile.id);
                     updateProfileList();
 
-                    cancelToast();
                     updateToast("Valittu profiili:  " + profile.name);
 
                 } else {
-                    cancelToast();
                     updateToast("Käytössä olevaa profiilia ei voi poistaa.");
                 }
 
@@ -76,13 +73,10 @@ public class ProfilesActivity extends AppCompatActivity {
         });
     }
 
-    public void cancelToast() {
+    public void updateToast(String string) {
         toast.cancel();
         toast = Toast.makeText(this, "", Toast.LENGTH_SHORT);
         toast.setGravity(Gravity.BOTTOM, 0, 300);
-    }
-
-    public void updateToast(String string) {
         toast.setText(string);
         toast.show();
     }

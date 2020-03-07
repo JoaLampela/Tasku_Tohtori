@@ -85,6 +85,5 @@ public class MainActivity extends AppCompatActivity {
         Log.d("tägi", "Main onResume called");
         updateCurrentProfileText();
         returning = false;
-        Log.d("tägi", "Main onResume finished");
     }
 }
