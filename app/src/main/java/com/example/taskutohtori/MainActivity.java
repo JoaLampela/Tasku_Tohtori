@@ -2,14 +2,16 @@ package com.example.taskutohtori;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.room.Room;
-import android.app.Activity;
+
+import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -32,13 +34,9 @@ public class MainActivity extends AppCompatActivity {
         returning = false;
 
         //Starts profile creation activity if the app has not been opened before
-        Intent firstProfileActivity = new Intent(MainActivity.this, CreateProfileActivity.class);
-        if (firstStartCheck()) {
-            SharedPreferences prefs = getSharedPreferences("Prefs", Activity.MODE_PRIVATE);
-            SharedPreferences.Editor prefEditor = prefs.edit();
-            prefEditor.putBoolean("check", false);
-            prefEditor.commit();
-            startActivity(firstProfileActivity);
+        Intent createProfileActivity = new Intent(MainActivity.this, CreateProfileActivity.class);
+        if (database.getProfileDao().getAllProfiles().size() == 0) {
+            startActivity(createProfileActivity);
             returning = true;
         }
 
@@ -47,8 +45,17 @@ public class MainActivity extends AppCompatActivity {
         }
     }
     public void onPlayButtonClick(View v) {
-        startActivity(new Intent(this,PlayActivity.class));
-        returning = true;
+        if (database.getProfileDao().getAllProfiles().size() >=1) {
+            startActivity(new Intent(this,PlayActivity.class));
+            returning = true;
+        } else {
+            Context context = getApplicationContext();
+            CharSequence text = "Luo ensin profiili.";
+            int duration = Toast.LENGTH_SHORT;
+            Toast toast = Toast.makeText(context, text, duration);
+            toast.setGravity(Gravity.BOTTOM, 0, 300);
+            toast.show();
+        }
     }
 
     public void onProfilesButtonClick(View v) {
@@ -60,14 +67,10 @@ public class MainActivity extends AppCompatActivity {
         System.exit(0);
     }
 
-    //Checking if the app has been launched before from a boolean value saved to SharedPreferences
-    public boolean firstStartCheck() {
-        SharedPreferences prefs = getSharedPreferences("Prefs", Activity.MODE_PRIVATE);
-        return prefs.getBoolean("check", true);
-    }
-
     public void updateCurrentProfileText() {
-        currentProfileTV.setText(database.getProfileDao().getAllProfilesWithActiveStatus(true).get(0).name);
+        if (database.getProfileDao().getAllProfiles().size() >= 1) {
+            currentProfileTV.setText(database.getProfileDao().getAllProfilesWithActiveStatus(true).get(0).name);
+        }
     }
 
     @Override

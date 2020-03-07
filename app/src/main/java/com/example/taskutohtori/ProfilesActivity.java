@@ -5,6 +5,7 @@ import androidx.room.Room;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
@@ -63,6 +64,7 @@ public class ProfilesActivity extends AppCompatActivity {
                 } else if(!delete) {
                     database.getProfileDao().updateActiveAllFalse(false);
                     database.getProfileDao().updateActive(true,profile.id);
+                    updateProfileList();
 
                     Context context = getApplicationContext();
                     CharSequence text = "Valittu profiili:  " + profile.name;
