@@ -23,4 +23,7 @@ public interface DiseaseDao {
 
     @Query("SELECT Diseases.ageBias FROM Diseases WHERE Diseases.name = :name")
     int getDiseaseAgeBiasWithName(String name);
+
+    @Query("SELECT Diseases.sexBias FROM Diseases WHERE Diseases.name = :name")
+    float getDiseaseSexBiasWithName(String name);
 }

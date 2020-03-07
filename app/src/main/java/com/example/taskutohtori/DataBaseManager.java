@@ -45,6 +45,19 @@ public class DataBaseManager {
         return (ArrayList<String>) database.getDiseaseDao().getAllDiseaseNames();
     }
 
+    public int getAgeBias(String disease) {
+        return database.getDiseaseDao().getDiseaseAgeBiasWithName(disease);
+    }
+    public int getAge() {
+        return database.getProfileDao().getAllProfilesWithActiveStatus(true).get(0).age;
+    }
+    public boolean getIsMale() {
+        return database.getProfileDao().getAllProfilesWithActiveStatus(true).get(0).male;
+    }
+    public float getSexBias(String disease) {
+        return database.getDiseaseDao().getDiseaseSexBiasWithName(disease);
+    }
+
 
 
 }

@@ -13,6 +13,8 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import static java.lang.StrictMath.abs;
+
 public class PlayActivity extends AppCompatActivity {
     public final static String EXTRA_MESSAGE = "com.example.myfirstapp.MESSAGE";
 
@@ -215,7 +217,42 @@ public class PlayActivity extends AppCompatActivity {
                 containedSymptoms--;
             }
         }
-        powerMap.put(askedDisease, (float) containedSymptoms / allSymptoms.size());
+        powerMap.put(askedDisease, (float) containedSymptoms * ageBonus(askedDisease) * sexBonus(askedDisease) / allSymptoms.size());
+    }
+
+    private float ageBonus(String disease) {
+        float ageBias = DBM.getAgeBias(disease);
+        int age = DBM.getAge();
+        int ageGroup = 0;
+
+        if (ageBias==0) {
+            return 1;
+        }
+        if (age > 0) {
+            ageGroup = 1;
+        }
+        if (age > 12) {
+            ageGroup = 2;
+        }
+        if (age > 21) {
+            ageGroup = 3;
+        }
+        if (age > 40) {
+            ageGroup = 4;
+        }
+        if (age > 60) {
+           ageGroup = 5;
+        }
+        return abs(ageGroup-ageBias)+1;
+    }
+
+    private float sexBonus(String disease) {
+        boolean isMale = DBM.getIsMale();
+        float sexBias = DBM.getSexBias(disease);
+        if (isMale) {
+            return abs(sexBias + 1);
+        }
+        return  abs(sexBias - 1);
     }
 
     private void createFinalMainSymptomList() {
