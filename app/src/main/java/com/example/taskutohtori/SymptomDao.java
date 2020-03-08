@@ -11,9 +11,6 @@ public interface SymptomDao {
     @Insert
     void insertSymptom(Symptom... symptoms);
 
-    @Query("SELECT * FROM Symptoms")
-    List<Symptom> getAllSymptoms();
-
     @Query("SELECT Symptoms.id FROM Symptoms WHERE Symptoms.name = :name")
     int getSymptomIdWithName(String name);
 }

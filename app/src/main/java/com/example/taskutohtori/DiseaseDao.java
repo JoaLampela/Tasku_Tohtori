@@ -12,9 +12,6 @@ public interface DiseaseDao {
     @Insert
     void insertDisease(Disease... diseases);
 
-    @Query("SELECT * FROM Diseases")
-    List<Disease> getAllDiseases();
-
     @Query("SELECT Diseases.id FROM Diseases WHERE Diseases.name = :name")
     int getDiseaseIdWithName(String name);
 

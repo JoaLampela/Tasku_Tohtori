@@ -16,16 +16,13 @@ public class ImageManager extends AppCompatActivity {
     public ImageManager(){
         this.currentIndex = 0;
         this.doctorImages = new ArrayList<>();
-        this.doctorImages.add(R.drawable.stockoctor);
-        this.doctorImages.add(R.drawable.stockoctor2);
-        this.doctorImages.add(R.drawable.stockoctor3);
-        this.doctorImages.add(R.drawable.stockoctor4);
+        this.doctorImages.add(R.drawable.tohtori1);
+        this.doctorImages.add(R.drawable.tohtori2);
     }
 
 
     public int updateImage() {
         int nextImageIndex = getRandomNumberInRange();
-
         if(nextImageIndex != currentIndex) {
             this.currentIndex = nextImageIndex;
             doctorImages.get(nextImageIndex);
@@ -34,7 +31,6 @@ public class ImageManager extends AppCompatActivity {
         return updateImage();
     }
     private int getRandomNumberInRange() {
-
         Random r = new Random();
         return r.nextInt(this.doctorImages.size());
     }
