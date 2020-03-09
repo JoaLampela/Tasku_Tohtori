@@ -1,6 +1,7 @@
 package com.example.taskutohtori;
 
 import android.content.Context;
+import android.util.Log;
 
 import androidx.room.Room;
 
@@ -11,7 +12,8 @@ public class DataBaseManager {
     private DatabaseT database;
 
     DataBaseManager (Context context) {
-        this.database = Room.databaseBuilder(context, DatabaseT.class, "Database").allowMainThreadQueries().fallbackToDestructiveMigration().build();
+        database = Room.databaseBuilder(context, DatabaseT.class, "Database").createFromAsset("database/Database").allowMainThreadQueries().fallbackToDestructiveMigration().build();
+        Log.d("TEST", "Database first item name: " + this.getSymptoms("Flunssa"));
     };
 
     public int getSizeOfMainSymptoms(String nextDisease) {

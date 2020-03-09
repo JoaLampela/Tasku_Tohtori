@@ -33,7 +33,7 @@ public class CreateProfileActivity extends AppCompatActivity {
         maleButton = findViewById(R.id.maleButton);
         femaleButton = findViewById(R.id.femaleButton);
         confirmButton = findViewById(R.id.confirmButton);
-        database = Room.databaseBuilder(this, DatabaseT.class, "Database").allowMainThreadQueries().fallbackToDestructiveMigration().build();
+        database = Room.databaseBuilder(this, DatabaseT.class, "Database").createFromAsset("database/Database").allowMainThreadQueries().fallbackToDestructiveMigration().build();
 
     }
 

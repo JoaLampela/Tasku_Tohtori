@@ -1,7 +1,6 @@
 package com.example.taskutohtori;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.room.Room;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -16,8 +15,6 @@ import static java.lang.StrictMath.abs;
 
 public class PlayActivity extends AppCompatActivity {
     public final static String EXTRA_MESSAGE = "com.example.myfirstapp.MESSAGE";
-
-    private DatabaseT database;
     private DataBaseManager DBM;
 
     Button yesButton;
@@ -41,12 +38,7 @@ public class PlayActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_play);
-
-        database = Room.databaseBuilder(this, DatabaseT.class, "Database").allowMainThreadQueries().fallbackToDestructiveMigration().build();
         DBM = new DataBaseManager(this);
-
-        //only for testing
-        createDiseases();
 
         yesButton = findViewById(R.id.yesButton);
         noButton = findViewById(R.id.noButton);
@@ -74,7 +66,7 @@ public class PlayActivity extends AppCompatActivity {
     }
 
     public void onNoButtonClick(View v) {
-        if(!allMainQuestionsAsked) {
+        if (!allMainQuestionsAsked) {
             removeDiseases(currentSymptom);
         }
         newQuestion();
@@ -82,11 +74,10 @@ public class PlayActivity extends AppCompatActivity {
     }
 
     private void newQuestion() {
-        
-        if(!allMainQuestionsAsked) {
+
+        if (!allMainQuestionsAsked) {
             currentSymptom = newMainQuestion();
-        }
-        else {
+        } else {
             currentSymptom = newRareQuestion();
         }
         if (currentSymptom.equals("Stop")) {
@@ -104,21 +95,21 @@ public class PlayActivity extends AppCompatActivity {
         float maxPower = 0;
         String nextDisease = null;
 
-        for(int i = 0; i < listOfAllDiseases.size(); i++) {
+        for (int i = 0; i < listOfAllDiseases.size(); i++) {
             float thisPower = powerMap.get(listOfAllDiseases.get(i));
             if (thisPower >= maxPower && thisPower != 1) {
                 nextDisease = listOfAllDiseases.get(i);
                 maxPower = thisPower;
             }
         }
-        if(nextDisease != null) {
-            for(int i = 0; i < DBM.getSizeOfMainSymptoms(nextDisease); i++) {
+        if (nextDisease != null) {
+            for (int i = 0; i < DBM.getSizeOfMainSymptoms(nextDisease); i++) {
                 if (!positiveSymptoms.contains(DBM.getMainSymptoms(nextDisease).get(i))) {
                     return DBM.getMainSymptoms(nextDisease).get(i);
                 }
             }
         }
-        if(listOfAllDiseases.isEmpty()) {
+        if (listOfAllDiseases.isEmpty()) {
             return "Cured";
         }
         createFinalMainSymptomList();
@@ -127,7 +118,7 @@ public class PlayActivity extends AppCompatActivity {
     }
 
     private String newRareQuestion() {
-        if(!finalSymptoms.isEmpty()) {
+        if (!finalSymptoms.isEmpty()) {
             currentSymptom = finalSymptoms.get(0);
             finalSymptoms.remove(finalSymptoms.get(0));
             return currentSymptom;
@@ -140,10 +131,9 @@ public class PlayActivity extends AppCompatActivity {
         ImageView doctorImage = findViewById(R.id.doctorImage);
         doctorImage.setImageResource(thisImageManager.updateImage());
 
-        if(!declareDisease) {
+        if (!declareDisease) {
             question.setText("Kuuluuko oireisiisi " + currentSymptom + "?");
-        }
-        else {
+        } else {
             Intent intent = new Intent(PlayActivity.this, ResultScreen.class);
             intent.putExtra(EXTRA_MESSAGE, result);
             startActivity(intent);
@@ -153,13 +143,12 @@ public class PlayActivity extends AppCompatActivity {
 
     //to be called after user answers no to the question
     private void removeDiseases(String currentSymptom) {
-        Log.d("TEST","removeDisease");
+        Log.d("TEST", "removeDisease");
 
         askedSymptoms.add(currentSymptom);
         for (int i = 0; i < DBM.getSizeOfDiseases(currentSymptom); i++) {
             String thisDisease = DBM.getDiseases(currentSymptom).get(i);
-            if(DBM.getMainSymptoms(thisDisease).contains(currentSymptom))
-            {
+            if (DBM.getMainSymptoms(thisDisease).contains(currentSymptom)) {
                 listOfAllDiseases.remove(thisDisease);
             }
 
@@ -178,7 +167,7 @@ public class PlayActivity extends AppCompatActivity {
 
     //gives power values for each disease
     private void createPower() {
-        for(int i = 0; i < listOfAllDiseases.size(); i++) {
+        for (int i = 0; i < listOfAllDiseases.size(); i++) {
             powerMap.put(listOfAllDiseases.get(i), (float) 0.0);
         }
     }
@@ -191,15 +180,15 @@ public class PlayActivity extends AppCompatActivity {
                 containedSymptoms++;
             }
         }
-        powerMap.put(thisDisease, (float) containedSymptoms/DBM.getSizeOfMainSymptoms(thisDisease));
+        powerMap.put(thisDisease, (float) containedSymptoms / DBM.getSizeOfMainSymptoms(thisDisease));
     }
 
     //need to add age and sex bonuses back
     private void updateFinalPower(String askedDisease) {
 
-        int containedSymptoms = 0;
+        float containedSymptoms = 0;
         ArrayList<String> allSymptoms = new ArrayList<>();
-        for(int i = 0; i < DBM.getSizeOfSymptoms(askedDisease); i++) {
+        for (int i = 0; i < DBM.getSizeOfSymptoms(askedDisease); i++) {
             allSymptoms.add(DBM.getSymptoms(askedDisease).get(i));
         }
         for (int i = 0; i < askedSymptoms.size(); i++) {
@@ -209,7 +198,7 @@ public class PlayActivity extends AppCompatActivity {
                 containedSymptoms--;
             }
         }
-        powerMap.put(askedDisease, (float) containedSymptoms * ageBonus(askedDisease) * sexBonus(askedDisease) / allSymptoms.size());
+        powerMap.put(askedDisease, (containedSymptoms + abs(containedSymptoms)* ageBonus(askedDisease) + abs(containedSymptoms) * sexBonus(askedDisease)) / allSymptoms.size());
     }
 
     //calculates ageBonus for updateFinalPower
@@ -218,7 +207,7 @@ public class PlayActivity extends AppCompatActivity {
         int age = DBM.getAge();
         int ageGroup = 0;
 
-        if (ageBias==0) {
+        if (ageBias == 0) {
             return 1;
         }
         if (age > 0) {
@@ -234,9 +223,9 @@ public class PlayActivity extends AppCompatActivity {
             ageGroup = 4;
         }
         if (age > 60) {
-           ageGroup = 5;
+            ageGroup = 5;
         }
-        return abs(ageGroup-ageBias)+1;
+        return abs(ageGroup - ageBias) + 1;
     }
 
     //calculates sexBonus for updateFinalPower
@@ -246,14 +235,14 @@ public class PlayActivity extends AppCompatActivity {
         if (isMale) {
             return abs(sexBias + 1);
         }
-        return  abs(sexBias - 1);
+        return abs(sexBias - 1);
     }
 
     private void createFinalMainSymptomList() {
-        for(int i = 0; i < listOfAllDiseases.size(); i++) {
-            for(int j = 0; j < DBM.getSizeOfSymptoms(listOfAllDiseases.get(i)); j++) {
-                if(!askedSymptoms.contains(DBM.getSymptoms(listOfAllDiseases.get(i)).get(j))) {
-                    if(!finalSymptoms.contains(DBM.getSymptoms(listOfAllDiseases.get(i)).get(j))) {
+        for (int i = 0; i < listOfAllDiseases.size(); i++) {
+            for (int j = 0; j < DBM.getSizeOfSymptoms(listOfAllDiseases.get(i)); j++) {
+                if (!askedSymptoms.contains(DBM.getSymptoms(listOfAllDiseases.get(i)).get(j))) {
+                    if (!finalSymptoms.contains(DBM.getSymptoms(listOfAllDiseases.get(i)).get(j))) {
                         finalSymptoms.add(DBM.getSymptoms(listOfAllDiseases.get(i)).get(j));
                     }
                 }
@@ -262,132 +251,14 @@ public class PlayActivity extends AppCompatActivity {
     }
 
     private void calculateResult() {
-        float bestResult = 0;
+        float bestResult = -100;
         for (int i = 0; i < listOfAllDiseases.size(); i++) {
             updateFinalPower(listOfAllDiseases.get(i));
-            if(powerMap.get(listOfAllDiseases.get(i)) > bestResult) {
+            if (powerMap.get(listOfAllDiseases.get(i)) >= bestResult) {
                 result = listOfAllDiseases.get(i);
+                Log.d("TEST", "Result: " + result);
                 bestResult = powerMap.get(listOfAllDiseases.get(i));
             }
         }
-    }
-
-    private void createDiseases() {
-
-        database.clearAllTables();
-
-        //Placeholder
-        database.getProfileDao().insertProfile(new Profile("Joa Lampela", 21, true, true));
-
-        database.getDiseaseDao().insertDisease(new Disease("Flunssa", 0, 0));
-
-        database.getMainSymptomDao().insertMainSymptom(new MainSymptom("Kuume"));
-        database.getMainSymptomDao().insertMainSymptom(new MainSymptom("Nuha"));
-
-        database.getRareSymptomDao().insertRareSymptom(new RareSymptom("Lihaskipu"));
-        database.getRareSymptomDao().insertRareSymptom(new RareSymptom("Yskä"));
-        database.getRareSymptomDao().insertRareSymptom(new RareSymptom("Tukkoisuus"));
-        database.getRareSymptomDao().insertRareSymptom(new RareSymptom("Kurkkukipu"));
-
-        database.getSymptomDao().insertSymptom(new Symptom("Kuume"));
-        database.getSymptomDao().insertSymptom(new Symptom("Nuha"));
-        database.getSymptomDao().insertSymptom(new Symptom("Lihaskipu"));
-        database.getSymptomDao().insertSymptom(new Symptom("Yskä"));
-        database.getSymptomDao().insertSymptom(new Symptom("Tukkoisuus"));
-        database.getSymptomDao().insertSymptom(new Symptom("Kurkkukipu"));
-
-        database.getJoinerDao().insertJoinerValue(new Joiner
-                (database.getDiseaseDao().getDiseaseIdWithName("Flunssa"),
-                        database.getSymptomDao().getSymptomIdWithName("Kuume"),
-                        database.getMainSymptomDao().getMainSymptomIdWithName("Kuume"), null));
-
-        database.getJoinerDao().insertJoinerValue(new Joiner
-                (database.getDiseaseDao().getDiseaseIdWithName("Flunssa"),
-                        database.getSymptomDao().getSymptomIdWithName("Nuha"),
-                        database.getMainSymptomDao().getMainSymptomIdWithName("Nuha"), null));
-
-        database.getJoinerDao().insertJoinerValue(new Joiner
-                (database.getDiseaseDao().getDiseaseIdWithName("Flunssa"),
-                        database.getSymptomDao().getSymptomIdWithName("Lihaskipu"), null,
-                        database.getRareSymptomDao().getRareSymptomIdWithName("Lihaskipu")));
-
-        database.getJoinerDao().insertJoinerValue(new Joiner
-                (database.getDiseaseDao().getDiseaseIdWithName("Flunssa"),
-                        database.getSymptomDao().getSymptomIdWithName("Yskä"), null,
-                        database.getRareSymptomDao().getRareSymptomIdWithName("Yskä")));
-
-        database.getJoinerDao().insertJoinerValue(new Joiner
-                (database.getDiseaseDao().getDiseaseIdWithName("Flunssa"),
-                        database.getSymptomDao().getSymptomIdWithName("Tukkoisuus"), null,
-                        database.getRareSymptomDao().getRareSymptomIdWithName("Tukkoisuus")));
-
-        database.getJoinerDao().insertJoinerValue(new Joiner
-                (database.getDiseaseDao().getDiseaseIdWithName("Flunssa"),
-                        database.getSymptomDao().getSymptomIdWithName("Kurkkukipu"), null,
-                        database.getRareSymptomDao().getRareSymptomIdWithName("Kurkkukipu")));
-
-        database.getDiseaseDao().insertDisease(new Disease("Koronavirus", 0, 0));
-
-        database.getMainSymptomDao().insertMainSymptom(new MainSymptom("Yskä"));
-        database.getMainSymptomDao().insertMainSymptom(new MainSymptom("Lihaskipu"));
-        database.getMainSymptomDao().insertMainSymptom(new MainSymptom("Nopeasti nouseva kuume"));
-
-        database.getRareSymptomDao().insertRareSymptom(new RareSymptom("Veriyskä"));
-        database.getRareSymptomDao().insertRareSymptom(new RareSymptom("Hengenahdistus"));
-        database.getRareSymptomDao().insertRareSymptom(new RareSymptom("Nuha"));
-
-        database.getSymptomDao().insertSymptom(new Symptom("Nopeasti nouseva kuume"));
-        database.getSymptomDao().insertSymptom(new Symptom("Veriyskä"));
-        database.getSymptomDao().insertSymptom(new Symptom("Hengenahdistus"));
-
-        database.getJoinerDao().insertJoinerValue(new Joiner
-                (database.getDiseaseDao().getDiseaseIdWithName("Koronavirus"),
-                        database.getSymptomDao().getSymptomIdWithName("Kuume"),
-                        database.getMainSymptomDao().getMainSymptomIdWithName("Kuume"), null));
-
-        database.getJoinerDao().insertJoinerValue(new Joiner
-                (database.getDiseaseDao().getDiseaseIdWithName("Koronavirus"),
-                        database.getSymptomDao().getSymptomIdWithName("Nuha"),
-                        database.getMainSymptomDao().getMainSymptomIdWithName("Nuha"), null));
-
-        database.getJoinerDao().insertJoinerValue(new Joiner
-                (database.getDiseaseDao().getDiseaseIdWithName("Koronavirus"),
-                        database.getSymptomDao().getSymptomIdWithName("Lihaskipu"),
-                        database.getMainSymptomDao().getMainSymptomIdWithName("Lihaskipu"), null));
-
-        database.getJoinerDao().insertJoinerValue(new Joiner
-                (database.getDiseaseDao().getDiseaseIdWithName("Koronavirus"),
-                        database.getSymptomDao().getSymptomIdWithName("Yskä"),
-                        database.getMainSymptomDao().getMainSymptomIdWithName("Yskä"), null));
-
-        database.getJoinerDao().insertJoinerValue(new Joiner
-                (database.getDiseaseDao().getDiseaseIdWithName("Koronavirus"),
-                        database.getSymptomDao().getSymptomIdWithName("Nopeasti nouseva kuume"),
-                        database.getMainSymptomDao().getMainSymptomIdWithName("Nopeasti nouseva kuume"), null));
-
-        database.getJoinerDao().insertJoinerValue(new Joiner
-                (database.getDiseaseDao().getDiseaseIdWithName("Koronavirus"),
-                        database.getSymptomDao().getSymptomIdWithName("Nuha"), null,
-                        database.getRareSymptomDao().getRareSymptomIdWithName("Nuha")));
-
-        database.getJoinerDao().insertJoinerValue(new Joiner
-                (database.getDiseaseDao().getDiseaseIdWithName("Koronavirus"),
-                        database.getSymptomDao().getSymptomIdWithName("Hengenahdistus"), null,
-                        database.getRareSymptomDao().getRareSymptomIdWithName("Hengenahdistus")));
-
-        database.getJoinerDao().insertJoinerValue(new Joiner
-                (database.getDiseaseDao().getDiseaseIdWithName("Koronavirus"),
-                        database.getSymptomDao().getSymptomIdWithName("Veriyskä"), null,
-                        database.getRareSymptomDao().getRareSymptomIdWithName("Veriyskä")));
-
-        database.getJoinerDao().insertJoinerValue(new Joiner
-                (database.getDiseaseDao().getDiseaseIdWithName("Koronavirus"),
-                        database.getSymptomDao().getSymptomIdWithName("Tukkoisuus"), null,
-                        database.getRareSymptomDao().getRareSymptomIdWithName("Tukkoisuus")));
-
-        database.getJoinerDao().insertJoinerValue(new Joiner
-                (database.getDiseaseDao().getDiseaseIdWithName("Koronavirus"),
-                        database.getSymptomDao().getSymptomIdWithName("Kurkkukipu"), null,
-                        database.getRareSymptomDao().getRareSymptomIdWithName("Kurkkukipu")));
     }
 }
