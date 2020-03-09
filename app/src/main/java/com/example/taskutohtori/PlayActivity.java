@@ -195,10 +195,10 @@ public class PlayActivity extends AppCompatActivity {
             if (allSymptoms.contains(askedSymptoms.get(i))) {
                 containedSymptoms++;
             } else {
-                containedSymptoms -= 1 / DBM.getSymptoms(askedDisease).size();
+                containedSymptoms--;
             }
         }
-        powerMap.put(askedDisease, containedSymptoms * ageBonus(askedDisease) * sexBonus(askedDisease) / allSymptoms.size());
+        powerMap.put(askedDisease, (containedSymptoms + abs(containedSymptoms)* ageBonus(askedDisease) + abs(containedSymptoms) * sexBonus(askedDisease)) / allSymptoms.size());
     }
 
     //calculates ageBonus for updateFinalPower
