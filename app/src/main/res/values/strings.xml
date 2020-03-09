@@ -1,13 +1,11 @@
 <resources>
     <string name="app_name">Taskutohtori</string>
     <string name="first_profile_name_text">Nimi</string>
-    <string name="first_profile_name_input">esim. Jukka Palmu</string>
     <string name="first_activity_age_text">Ikä 0–99</string>
-    <string name="first_activity_age_input">69</string>
     <string name="first_activity_sex_text">Sukupuoli</string>
     <string name="first_profile_sex_male">Mies</string>
     <string name="first_profile_sex_female">Nainen</string>
-    <string name="first_profile_confirm_button">Luo Käyttäjä</string>
+    <string name="first_profile_confirm_button">Luo Profiili</string>
     <string name="new_profile_button">Luo uusi profiili</string>
     <string name="main_activity_play_button">Aloita</string>
     <string name="main_activity_profiles_button">Profiilit</string>
@@ -15,6 +13,7 @@
     <string name="title_activity_loading_screen">LoadingScreenActivity</string>
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
-    <string name="profile_delete">Profiilien poisto</string>
+    <string name="profile_delete">Profiilien poisto\npois päältä</string>
+    <string name="profile_delete_on">Profiilien poisto\npäällä</string>
     <string name="no_profiles_tv">Yhtään profiilia ei ole vielä luotu</string>
 </resources>

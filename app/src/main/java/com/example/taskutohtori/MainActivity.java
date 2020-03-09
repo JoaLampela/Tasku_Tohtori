@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
     TextView currentProfileTV;
     DatabaseT database;
     boolean returning;
+    ImageView profileImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
         profilesButton = findViewById(R.id.profilesButton);
         exitButton = findViewById(R.id.exitButton);
         currentProfileTV = findViewById(R.id.current_profile_text);
+        profileImage = findViewById(R.id.profileImage);
         database = Room.databaseBuilder(MainActivity.this, DatabaseT.class, "Database").allowMainThreadQueries().fallbackToDestructiveMigration().build();
         returning = false;
 
@@ -70,6 +73,7 @@ public class MainActivity extends AppCompatActivity {
     public void updateCurrentProfileText() {
         if (database.getProfileDao().getAllProfiles().size() >= 1) {
             currentProfileTV.setText(database.getProfileDao().getAllProfilesWithActiveStatus(true).get(0).name);
+            profileImage.setImageResource(R.drawable.profile_image);
         }
     }
 
