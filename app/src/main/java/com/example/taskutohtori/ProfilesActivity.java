@@ -38,6 +38,7 @@ public class ProfilesActivity extends AppCompatActivity {
         deleteSwitch = findViewById(R.id.deleteSwitch);
         profileList = findViewById(R.id.profileList);
         toast = Toast.makeText(this, "", Toast.LENGTH_SHORT);
+
         updateProfileList();
 
         deleteSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -63,8 +64,6 @@ public class ProfilesActivity extends AppCompatActivity {
                     database.getProfileDao().updateActive(true,profile.id);
                     updateProfileList();
 
-                    updateToast("Valittu profiili:  " + profile.name);
-
                 } else {
                     updateToast("Käytössä olevaa profiilia ei voi poistaa.");
                 }
@@ -82,7 +81,7 @@ public class ProfilesActivity extends AppCompatActivity {
     }
 
     public void updateProfileList() {
-        profileList.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, database.getProfileDao().getAllProfiles()));
+        profileList.setAdapter(new ProfileListAdapter(this,R.layout.profile_adapter_view_layout, database.getProfileDao().getAllProfiles()));
     }
 
     public void newProfile(View view) {
