@@ -44,6 +44,12 @@ public class ProfilesActivity extends AppCompatActivity {
         deleteSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 delete = isChecked;
+                if(delete) {
+                    deleteSwitch.setText(R.string.profile_delete_on);
+                    updateToast("Klikkaa profiilia poistaaksesi sen.");
+                } else {
+                    deleteSwitch.setText(R.string.profile_delete);
+                }
             }
         });
 

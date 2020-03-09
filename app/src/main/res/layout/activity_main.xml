@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#FFFFFF"
     android:padding="16dp"
     tools:context=".MainActivity">
 
@@ -15,28 +16,27 @@
         android:text="@string/main_activity_profiles_button"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.504"
+        app:layout_constraintHorizontal_bias="0.50"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guideline"
-        app:layout_constraintVertical_bias="0.667" />
+        app:layout_constraintTop_toTopOf="@+id/guideline" />
 
     <Button
         android:id="@+id/playButton"
         android:layout_width="286dp"
         android:layout_height="43dp"
+        android:layout_marginBottom="8dp"
         android:onClick="onPlayButtonClick"
         android:text="@string/main_activity_play_button"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/profilesButton"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guideline" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.5" />
+        app:layout_constraintGuide_percent="0.6" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline2"
@@ -49,14 +49,13 @@
         android:id="@+id/exitButton"
         android:layout_width="286dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         android:onClick="onExitButtonClick"
         android:text="@string/main_activity_exit_button"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.504"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guideline"
-        app:layout_constraintVertical_bias="0.861" />
+        app:layout_constraintTop_toBottomOf="@+id/profilesButton" />
 
     <TextView
         android:id="@+id/current_profile_text"
@@ -70,7 +69,7 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <ImageView
-        android:id="@+id/imageView2"
+        android:id="@+id/logoImage"
         android:layout_width="409dp"
         android:layout_height="130dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -79,5 +78,13 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.048"
         app:srcCompat="@drawable/logo" />
+
+    <ImageView
+        android:id="@+id/profileImage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/current_profile_text"
+        app:layout_constraintEnd_toStartOf="@+id/current_profile_text"
+        app:layout_constraintTop_toTopOf="@+id/current_profile_text" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

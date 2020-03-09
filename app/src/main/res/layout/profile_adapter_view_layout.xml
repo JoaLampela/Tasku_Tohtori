@@ -3,22 +3,28 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#FFFFFF"
     android:orientation="horizontal"
-    android:weightSum="100"
-    >
+    android:weightSum="100">
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="start"
         android:layout_weight="80"
         android:orientation="vertical"
-        android:layout_gravity="start">
+        android:paddingStart="8dp"
+        android:paddingLeft="8dp"
+        android:paddingEnd="0dp"
+        android:paddingRight="0dp">
 
         <TextView
             android:id="@+id/nameText"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:gravity="center_vertical"
+            android:paddingTop="8dp"
+            android:paddingBottom="0dp"
             android:text="Joa Lampela"
             android:textSize="18sp">
 
@@ -54,16 +60,26 @@
 
     </LinearLayout>
 
-    <ImageView
-        android:id="@+id/activeIV"
+    <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="end"
+        android:layout_height="70dp"
         android:layout_weight="20"
-        android:padding="8dp"
-        android:scaleType="fitEnd"
-        app:srcCompat="@android:drawable/btn_radio">
+        android:orientation="vertical"
+        android:paddingTop="20dp"
+        android:paddingBottom="20dp">
 
-    </ImageView>
+        <ImageView
+            android:id="@+id/activeIV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            android:scaleType="fitEnd"
+            app:srcCompat="@drawable/active_false">
+
+        </ImageView>
+
+    </LinearLayout>
 
 </LinearLayout>
