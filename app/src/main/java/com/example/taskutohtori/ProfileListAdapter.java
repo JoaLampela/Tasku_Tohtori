@@ -20,7 +20,6 @@ import java.util.List;
 
 public class ProfileListAdapter extends ArrayAdapter<Profile> {
 
-    private static final String TAG = "ProfileListAdapter";
     private Context context;
     private int resource;
 
