@@ -16,4 +16,6 @@
     <string name="profile_delete">Profiilien poisto\npois päältä</string>
     <string name="profile_delete_on">Profiilien poisto\npäällä</string>
     <string name="no_profiles_tv">Yhtään profiilia ei ole vielä luotu</string>
+    <string name="answer_yes">Kyllä</string>
+    <string name="answer_no">Ei</string>
 </resources>

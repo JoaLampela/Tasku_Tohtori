@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
         exitButton = findViewById(R.id.exitButton);
         currentProfileTV = findViewById(R.id.current_profile_text);
         profileImage = findViewById(R.id.profileImage);
-        database = Room.databaseBuilder(MainActivity.this, DatabaseT.class, "Database").allowMainThreadQueries().fallbackToDestructiveMigration().build();
+        database = Room.databaseBuilder(MainActivity.this, DatabaseT.class, "Database").createFromAsset("database/Database").allowMainThreadQueries().fallbackToDestructiveMigration().build();
         returning = false;
 
         //Starts profile creation activity if the app has not been opened before

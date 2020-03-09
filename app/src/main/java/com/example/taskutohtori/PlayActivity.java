@@ -126,7 +126,7 @@ public class PlayActivity extends AppCompatActivity {
         return "Stop";
     }
 
-    //to be called after each button press(kyllä, ei, en osaa sanoa)
+    //to be called after each button press(kyllä, ei)
     private void updateUI() {
         ImageView doctorImage = findViewById(R.id.doctorImage);
         doctorImage.setImageResource(thisImageManager.updateImage());

@@ -15,39 +15,27 @@
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.5" />
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="182dp"
-        android:orientation="horizontal"
+    <Button
+        android:id="@+id/yesButton"
+        android:layout_width="215dp"
+        android:layout_height="0dp"
+        android:onClick="onYesButtonClick"
+        android:text="@string/answer_yes"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintGuide_percent="0.75"
+        app:layout_constraintEnd_toStartOf="@+id/noButton"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/doctorImage" />
 
     <Button
-        android:id="@+id/yesButton"
-        android:layout_width="350dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
-        android:onClick="onYesButtonClick"
-        android:text="Kyllä"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.491"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guideline4" />
-
-    <Button
         android:id="@+id/noButton"
-        android:layout_width="350dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="28dp"
+        android:layout_width="215dp"
+        android:layout_height="0dp"
         android:onClick="onNoButtonClick"
-        android:text="Ei"
+        android:text="@string/answer_no"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.491"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toEndOf="@+id/yesButton"
+        app:layout_constraintTop_toBottomOf="@+id/doctorImage" />
 
     <ImageView
         android:id="@+id/doctorImage"
