@@ -54,6 +54,8 @@ public class PlayActivity extends AppCompatActivity {
         allMainQuestionsAsked = false;
         declareDisease = false;
 
+        removeImpossibleDiseases();
+
         createPower();
         newQuestion();
         updateUI();
@@ -63,6 +65,22 @@ public class PlayActivity extends AppCompatActivity {
         increaseDiseasePower(currentSymptom);
         newQuestion();
         updateUI();
+    }
+
+    public void removeImpossibleDiseases() {
+        for(int i= 0; i < listOfAllDiseases.size(); i++) {
+            if(DBM.getIsMale()) {
+                if (DBM.getSexBias(listOfAllDiseases.get(i)) <= -1.0) {
+                    listOfAllDiseases.remove(listOfAllDiseases.get(i));
+                }
+            }
+            else {
+                if (DBM.getSexBias(listOfAllDiseases.get(i)) >= 1.0) {
+                    listOfAllDiseases.remove(listOfAllDiseases.get(i));
+                }
+            }
+
+        }
     }
 
     public void onNoButtonClick(View v) {
