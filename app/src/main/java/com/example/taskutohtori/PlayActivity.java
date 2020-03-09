@@ -253,7 +253,9 @@ public class PlayActivity extends AppCompatActivity {
         for(int i = 0; i < listOfAllDiseases.size(); i++) {
             for(int j = 0; j < DBM.getSizeOfSymptoms(listOfAllDiseases.get(i)); j++) {
                 if(!askedSymptoms.contains(DBM.getSymptoms(listOfAllDiseases.get(i)).get(j))) {
-                    finalSymptoms.add(DBM.getSymptoms(listOfAllDiseases.get(i)).get(j));
+                    if(!finalSymptoms.contains(DBM.getSymptoms(listOfAllDiseases.get(i)).get(j))) {
+                        finalSymptoms.add(DBM.getSymptoms(listOfAllDiseases.get(i)).get(j));
+                    }
                 }
             }
         }

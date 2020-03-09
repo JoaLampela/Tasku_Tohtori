@@ -1,7 +1,6 @@
 package com.example.taskutohtori;
 
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -23,6 +22,6 @@ public class SplashScreen extends AppCompatActivity {
     }
 
     private void startMainActivity() {
-        startActivity(new Intent(this,MainActivity.class));
+        startActivity(new Intent(this, MainActivity.class));
     }
 }
