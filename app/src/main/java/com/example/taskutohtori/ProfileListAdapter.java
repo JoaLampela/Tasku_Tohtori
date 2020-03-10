@@ -28,17 +28,16 @@ public class ProfileListAdapter extends ArrayAdapter<Profile> {
 
         String name = getItem(position).name;
         int age = getItem(position).age;
-        boolean male = getItem(position).male;
         String sex = getItem(position).getSexString();
         boolean active = getItem(position).active;
 
         LayoutInflater inflater = LayoutInflater.from(context);
         convertView = inflater.inflate(resource, parent, false);
 
-        TextView nameText = (TextView) convertView.findViewById(R.id.nameText);
-        TextView ageText = (TextView) convertView.findViewById(R.id.ageText);
-        TextView sexText = (TextView) convertView.findViewById(R.id.sexText);
-        ImageView activeIV = (ImageView) convertView.findViewById(R.id.activeIV);
+        TextView nameText = convertView.findViewById(R.id.nameText);
+        TextView ageText = convertView.findViewById(R.id.ageText);
+        TextView sexText = convertView.findViewById(R.id.sexText);
+        ImageView activeIV = convertView.findViewById(R.id.activeIV);
 
         nameText.setText(name);
         ageText.setText("Ikä:  " + age);

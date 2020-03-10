@@ -11,15 +11,14 @@
     <string name="main_activity_profiles_button">Profiilit</string>
     <string name="main_activity_exit_button">Poistu</string>
     <string name="title_activity_loading_screen">LoadingScreenActivity</string>
-    <string name="dummy_button">Dummy Button</string>
-    <string name="dummy_content">DUMMY\nCONTENT</string>
-    <string name="profile_delete">Profiilien poisto\npois päältä</string>
-    <string name="profile_delete_on">Profiilien poisto\npäällä</string>
+    <string name="profile_delete">Profiilien poisto pois päältä\u0020\u0020</string>
+    <string name="profile_delete_on">Profiilien poisto päällä\u0020\u0020</string>
     <string name="no_profiles_tv">Yhtään profiilia ei ole vielä luotu</string>
     <string name="answer_yes">Kyllä</string>
     <string name="answer_no">Ei</string>
     <string name="result_unknown">En osaa sanoa mikä sinua vaivaa.</string>
     <string name="result">Sinulla saattaa olla\u0020</string>
-    <string name="profile_age">Ikä:\u0020\u0020</string>
-    <string name="profile_sex">Sukupuoli:\u0020\u0020</string>
+    <string name="back">Takaisin</string>
+    <string name="again">Uudestaan</string>
+
 </resources>

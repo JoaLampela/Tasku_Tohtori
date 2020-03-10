@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
             CharSequence text = "Luo ensin profiili.";
             int duration = Toast.LENGTH_SHORT;
             Toast toast = Toast.makeText(context, text, duration);
-            toast.setGravity(Gravity.BOTTOM, 0, 300);
+            toast.setGravity(Gravity.BOTTOM, 0, 750);
             toast.show();
         }
     }
