@@ -3,6 +3,7 @@ package com.example.taskutohtori;
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -23,15 +24,16 @@ public class PlayActivity extends AppCompatActivity {
     ImageManager thisImageManager;
 
     private ArrayList<String> listOfAllDiseases;
-    private ArrayList<String> positiveSymptoms;
     private ArrayList<String> askedSymptoms;
     private ArrayList<String> finalSymptoms;
     private HashMap<String, Float> powerMap;
+    private ArrayList<String> listOfAllMainSymptoms;
 
     private String currentSymptom;
     private String result;
     boolean allMainQuestionsAsked;
     boolean declareDisease;
+    boolean firstTime;
 
 
     @Override
@@ -46,13 +48,14 @@ public class PlayActivity extends AppCompatActivity {
         thisImageManager = new ImageManager();
 
         listOfAllDiseases = DBM.getAllDiseases();
-        positiveSymptoms = new ArrayList<>();
+        listOfAllMainSymptoms = DBM.getAllMainSymptoms();
         askedSymptoms = new ArrayList<>();
         finalSymptoms = new ArrayList<>();
         powerMap = new HashMap<>();
 
         allMainQuestionsAsked = false;
         declareDisease = false;
+        firstTime = true;
 
         removeImpossibleDiseases();
 
@@ -62,9 +65,9 @@ public class PlayActivity extends AppCompatActivity {
     }
 
     public void onYesButtonClick(View v) {
-        yesButton.setEnabled(false);
-        noButton.setEnabled(false);
-        increaseDiseasePower(currentSymptom);
+        yesButton.setClickable(false);
+        noButton.setClickable(false);
+        allMainQuestionsAsked = true;
         newQuestion();
         updateUI();
     }
@@ -86,18 +89,27 @@ public class PlayActivity extends AppCompatActivity {
     }
 
     public void onNoButtonClick(View v) {
+        yesButton.setClickable(false);
+        noButton.setClickable(false);
         if (!allMainQuestionsAsked) {
             removeDiseases(currentSymptom);
+            listOfAllMainSymptoms.remove(currentSymptom);
+            Log.d("TEST","listOfAllMainSymptoms = "+ listOfAllMainSymptoms);
         }
         newQuestion();
         updateUI();
     }
 
     private void newQuestion() {
-
         if (!allMainQuestionsAsked) {
             currentSymptom = newMainQuestion();
         } else {
+            if (firstTime) {
+                Log.d("TEST","first time");
+                removeDiseasesWithoutMainSymptom(currentSymptom);
+                firstTime = false;
+                createFinalMainSymptomList();
+            }
             currentSymptom = newRareQuestion();
         }
         if (currentSymptom.equals("Stop")) {
@@ -111,30 +123,13 @@ public class PlayActivity extends AppCompatActivity {
     }
 
     private String newMainQuestion() {
-
-        float maxPower = 0;
-        String nextDisease = null;
-
-        for (int i = 0; i < listOfAllDiseases.size(); i++) {
-            float thisPower = powerMap.get(listOfAllDiseases.get(i));
-            if (thisPower >= maxPower && thisPower != 1) {
-                nextDisease = listOfAllDiseases.get(i);
-                maxPower = thisPower;
-            }
-        }
-        if (nextDisease != null) {
-            for (int i = 0; i < DBM.getSizeOfMainSymptoms(nextDisease); i++) {
-                if (!positiveSymptoms.contains(DBM.getMainSymptoms(nextDisease).get(i))) {
-                    return DBM.getMainSymptoms(nextDisease).get(i);
-                }
-            }
-        }
-        if (listOfAllDiseases.isEmpty()) {
+        String nextSymptom= null;
+        if (listOfAllMainSymptoms.isEmpty()) {
+            Log.d("TEST","Cured");
             return "Cured";
         }
-        createFinalMainSymptomList();
-        allMainQuestionsAsked = true;
-        return (newRareQuestion());
+        nextSymptom = listOfAllMainSymptoms.get(0);
+        return nextSymptom;
     }
 
     private String newRareQuestion() {
@@ -159,33 +154,42 @@ public class PlayActivity extends AppCompatActivity {
             startActivity(intent);
             finish();
         }
-        yesButton.setEnabled(true);
-        noButton.setEnabled(true);
+        new Handler().postDelayed(new Runnable() {
+            public void run() {
+                yesButton.setClickable(true);
+                noButton.setClickable(true);
+            }
+        },100);
+
+
     }
 
     //to be called after user answers no to the question
     private void removeDiseases(String currentSymptom) {
         Log.d("TEST", "removeDisease");
-
         askedSymptoms.add(currentSymptom);
         for (int i = 0; i < DBM.getSizeOfDiseases(currentSymptom); i++) {
             String thisDisease = DBM.getDiseases(currentSymptom).get(i);
             if (DBM.getMainSymptoms(thisDisease).contains(currentSymptom)) {
                 listOfAllDiseases.remove(thisDisease);
+                Log.d("TEST","removed "+thisDisease);
             }
 
         }
     }
-
-    //to Be called after user answers yes to the question
-    private void increaseDiseasePower(String currentSymptom) {
-        positiveSymptoms.add(currentSymptom);
+    private void removeDiseasesWithoutMainSymptom(String currentSymptom) {
+        listOfAllMainSymptoms = new ArrayList<>();
+        listOfAllMainSymptoms.add(currentSymptom);
         askedSymptoms.add(currentSymptom);
-        for (int i = 0; i < DBM.getSizeOfDiseases(currentSymptom); i++) {
-            String thisDisease = DBM.getDiseases(currentSymptom).get(i);
-            updatePower(thisDisease);
+        for (int i = 0; i < DBM.getAllDiseases().size(); i++) {
+            String thisDisease = DBM.getAllDiseases().get(i);
+            if (!DBM.getMainSymptoms(thisDisease).contains(currentSymptom)) {
+                listOfAllDiseases.remove(thisDisease);
+                Log.d("TEST","removed1 "+thisDisease);
+            }
         }
     }
+
 
     //gives power values for each disease
     private void createPower() {
@@ -194,16 +198,6 @@ public class PlayActivity extends AppCompatActivity {
         }
     }
 
-    //updates disease's power
-    private void updatePower(String thisDisease) {
-        int containedSymptoms = 0;
-        for (int i = 0; i < DBM.getSizeOfMainSymptoms(thisDisease); i++) {
-            if (askedSymptoms.contains(DBM.getMainSymptoms(thisDisease).get(i))) {
-                containedSymptoms++;
-            }
-        }
-        powerMap.put(thisDisease, (float) containedSymptoms / DBM.getSizeOfMainSymptoms(thisDisease));
-    }
 
     //need to add age and sex bonuses back
     private void updateFinalPower(String askedDisease) {
@@ -225,7 +219,7 @@ public class PlayActivity extends AppCompatActivity {
 
     //calculates ageBonus for updateFinalPower
     private float ageBonus(String disease) {
-        float ageBias = DBM.getAgeBias(disease);
+        int ageBias = DBM.getAgeBias(disease);
         int age = DBM.getAge();
         int ageGroup = 0;
 
@@ -247,7 +241,7 @@ public class PlayActivity extends AppCompatActivity {
         if (age > 60) {
             ageGroup = 5;
         }
-        return abs(ageGroup - ageBias) + 1;
+        return (float) 1.0/(abs((ageGroup - ageBias)) + 1);
     }
 
     //calculates sexBonus for updateFinalPower
@@ -262,14 +256,15 @@ public class PlayActivity extends AppCompatActivity {
 
     private void createFinalMainSymptomList() {
         for (int i = 0; i < listOfAllDiseases.size(); i++) {
-            for (int j = 0; j < DBM.getSizeOfSymptoms(listOfAllDiseases.get(i)); j++) {
-                if (!askedSymptoms.contains(DBM.getSymptoms(listOfAllDiseases.get(i)).get(j))) {
-                    if (!finalSymptoms.contains(DBM.getSymptoms(listOfAllDiseases.get(i)).get(j))) {
-                        finalSymptoms.add(DBM.getSymptoms(listOfAllDiseases.get(i)).get(j));
+            for (int j = 0; j < DBM.getRareSymptoms(listOfAllDiseases.get(i)).size(); j++) {
+                if (!askedSymptoms.contains(DBM.getRareSymptoms(listOfAllDiseases.get(i)).get(j))) {
+                    if (!finalSymptoms.contains(DBM.getRareSymptoms(listOfAllDiseases.get(i)).get(j))) {
+                        finalSymptoms.add(DBM.getRareSymptoms(listOfAllDiseases.get(i)).get(j));
                     }
                 }
             }
         }
+        Log.d("TEST","llllll "+finalSymptoms);
     }
 
     private void calculateResult() {

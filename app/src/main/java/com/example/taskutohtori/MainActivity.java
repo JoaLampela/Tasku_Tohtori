@@ -6,10 +6,12 @@ import androidx.room.Room;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -19,6 +21,7 @@ public class MainActivity extends AppCompatActivity {
     Button playButton;
     Button profilesButton;
     Button exitButton;
+    ImageButton infoButton;
     TextView currentProfileTV;
     DatabaseT database;
     boolean returning;
@@ -31,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
         playButton = findViewById(R.id.playButton);
         profilesButton = findViewById(R.id.profilesButton);
         exitButton = findViewById(R.id.exitButton);
+        infoButton = findViewById(R.id.infoButton);
         currentProfileTV = findViewById(R.id.current_profile_text);
         profileImage = findViewById(R.id.profileImage);
         database = Room.databaseBuilder(MainActivity.this, DatabaseT.class, "Database").createFromAsset("database/Database").allowMainThreadQueries().fallbackToDestructiveMigration().build();
@@ -48,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
     public void onPlayButtonClick(View v) {
+        playButton.setClickable(false);
         if (database.getProfileDao().getAllProfiles().size() >=1) {
             startActivity(new Intent(this,PlayActivity.class));
             returning = true;
@@ -59,15 +64,26 @@ public class MainActivity extends AppCompatActivity {
             toast.setGravity(Gravity.BOTTOM, 0, 300);
             toast.show();
         }
+        setDelay(100,playButton);
     }
 
     public void onProfilesButtonClick(View v) {
+        profilesButton.setClickable(false);
         startActivity(new Intent(this,ProfilesActivity.class));
         returning = true;
+        setDelay(100,profilesButton);
     }
-    public void onExitButtonClick(View V) {
+    public void onExitButtonClick(View v) {
+        exitButton.setClickable(false);
         finish();
         System.exit(0);
+        setDelay(100,exitButton);
+    }
+
+    public void onInfoButtonClick(View v) {
+        infoButton.setClickable(false);
+        startActivity(new Intent(this,InfoActivity.class));
+        setDelay(100,infoButton);
     }
 
     public void updateCurrentProfileText() {
@@ -89,5 +105,13 @@ public class MainActivity extends AppCompatActivity {
         Log.d("tägi", "Main onResume called");
         updateCurrentProfileText();
         returning = false;
+    }
+    private void setDelay(int delay, final View thisButton) {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                thisButton.setClickable(true);
+            }
+        },delay);
     }
 }

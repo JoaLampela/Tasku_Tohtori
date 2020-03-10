@@ -48,6 +48,7 @@ public class DataBaseManager {
     }
 
     public int getAgeBias(String disease) {
+        Log.d("TEST","AgeBias: "+database.getDiseaseDao().getDiseaseAgeBiasWithName(disease)+disease);
         return database.getDiseaseDao().getDiseaseAgeBiasWithName(disease);
     }
     public int getAge() {
@@ -80,6 +81,15 @@ public class DataBaseManager {
     }
     public ArrayList<Profile> getAllProfiles() {
         return (ArrayList<Profile>) database.getProfileDao().getAllProfiles();
+    }
+    public String getNextMainSymptom() {
+        return database.getMainSymptomDao().getAllMainSymptoms().get(0);
+    }
+    public ArrayList<String> getAllMainSymptoms() {
+        return (ArrayList<String>) database.getMainSymptomDao().getAllMainSymptoms();
+    }
+    public ArrayList<String> getListOfDiseasesRareSymptoms(String disease) {
+        return (ArrayList<String>) database.getJoinerDao().getRareSymptomNamesWithDiseaseName(disease);
     }
 
 
