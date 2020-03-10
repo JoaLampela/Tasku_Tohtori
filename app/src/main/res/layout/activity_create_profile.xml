@@ -83,7 +83,7 @@
         android:id="@+id/confirmButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:onClick="createUser"
+        android:onClick="onClickCreateUser"
         android:text="@string/create_profile_confirm_button">
 
     </Button>
