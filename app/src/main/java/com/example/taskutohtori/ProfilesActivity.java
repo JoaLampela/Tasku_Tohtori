@@ -87,7 +87,7 @@ public class ProfilesActivity extends AppCompatActivity {
     }
 
     public void updateProfileList() {
-        profileList.setAdapter(new ProfileListAdapter(this,R.layout.profile_adapter_view_layout, database.getProfileDao().getAllProfiles()));
+        profileList.setAdapter(new ProfileListAdapter(this, R.layout.profile_adapter_view_layout, database.getProfileDao().getAllProfiles()));
     }
 
     public void newProfile(View view) {
