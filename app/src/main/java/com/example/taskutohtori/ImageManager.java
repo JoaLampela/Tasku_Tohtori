@@ -22,7 +22,6 @@ public class ImageManager extends AppCompatActivity {
         this.doctorImages.add(R.drawable.dohdori4_scaled);
         this.doctorImages.add(R.drawable.dohdori5_scaled);
         this.doctorImages.add(R.drawable.dohdori6_scaled);
-        this.doctorImages.add(R.drawable.dohdori7_scaled);
     }
 
 
