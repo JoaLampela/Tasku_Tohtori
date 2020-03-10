@@ -52,7 +52,11 @@ public class MainActivity extends AppCompatActivity {
         }
     }
     public void onPlayButtonClick(View v) {
+        profilesButton.setClickable(false);
         playButton.setClickable(false);
+        exitButton.setClickable(false);
+        infoButton.setClickable(false);
+        setDelay(100);
         if (database.getProfileDao().getAllProfiles().size() >=1) {
             startActivity(new Intent(this,PlayActivity.class));
             returning = true;
@@ -64,26 +68,35 @@ public class MainActivity extends AppCompatActivity {
             toast.setGravity(Gravity.BOTTOM, 0, 750);
             toast.show();
         }
-        setDelay(100,playButton);
     }
 
     public void onProfilesButtonClick(View v) {
         profilesButton.setClickable(false);
+        playButton.setClickable(false);
+        exitButton.setClickable(false);
+        infoButton.setClickable(false);
+
+        setDelay(100);
         startActivity(new Intent(this,ProfilesActivity.class));
         returning = true;
-        setDelay(100,profilesButton);
     }
     public void onExitButtonClick(View v) {
+        profilesButton.setClickable(false);
+        playButton.setClickable(false);
         exitButton.setClickable(false);
+        infoButton.setClickable(false);
         finish();
         System.exit(0);
-        setDelay(100,exitButton);
+        setDelay(100);
     }
 
     public void onInfoButtonClick(View v) {
+        profilesButton.setClickable(false);
+        playButton.setClickable(false);
+        exitButton.setClickable(false);
         infoButton.setClickable(false);
+        setDelay(100);
         startActivity(new Intent(this,InfoActivity.class));
-        setDelay(100,infoButton);
     }
 
     public void updateCurrentProfileText() {
@@ -106,11 +119,14 @@ public class MainActivity extends AppCompatActivity {
         updateCurrentProfileText();
         returning = false;
     }
-    private void setDelay(int delay, final View thisButton) {
+    private void setDelay(int delay) {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                thisButton.setClickable(true);
+                profilesButton.setClickable(true);
+                playButton.setClickable(true);
+                exitButton.setClickable(true);
+                infoButton.setClickable(true);
             }
         },delay);
     }
