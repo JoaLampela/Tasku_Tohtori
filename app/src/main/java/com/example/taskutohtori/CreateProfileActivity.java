@@ -88,9 +88,11 @@ public class CreateProfileActivity extends AppCompatActivity {
         }
     }
 
-    public void createUser(View view) {
+    public void onClickCreateUser(View view) {
+        confirmButton.setClickable(false);
 
         if (!checkName() | !checkAge() | !checkSex()) {
+            confirmButton.setClickable(true);
             return;
 
         } else {
@@ -98,5 +100,6 @@ public class CreateProfileActivity extends AppCompatActivity {
             DBM.addNewProfile(name, age, male, true);
             finish();
         }
+
     }
 }

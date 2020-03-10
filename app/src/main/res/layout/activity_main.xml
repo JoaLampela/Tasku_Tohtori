@@ -86,4 +86,13 @@
         app:layout_constraintEnd_toStartOf="@+id/current_profile_text"
         app:layout_constraintTop_toTopOf="@+id/current_profile_text" />
 
+    <ImageButton
+        android:id="@+id/infoButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="onInfoButtonClick"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@android:drawable/ic_dialog_info" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

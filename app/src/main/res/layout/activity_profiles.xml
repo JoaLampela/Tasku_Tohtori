@@ -35,7 +35,7 @@
         app:layout_constraintTop_toBottomOf="@+id/profileList" />
 
     <Button
-        android:id="@+id/backButton"
+        android:id="@+id/backButtonResultScreen"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"

@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
@@ -27,6 +28,7 @@ public class ProfilesActivity extends AppCompatActivity {
     Profile profile;
     Toast toast;
     DataBaseManager DBM;
+    Button backButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +37,7 @@ public class ProfilesActivity extends AppCompatActivity {
 
         DBM = new DataBaseManager(this);
         newProfile = findViewById(R.id.newProfileButton);
+        backButton = findViewById(R.id.backButtonResultScreen);
         deleteSwitch = findViewById(R.id.deleteSwitch);
         profileList = findViewById(R.id.profileList);
         toast = Toast.makeText(this, "", Toast.LENGTH_SHORT);
@@ -91,12 +94,14 @@ public class ProfilesActivity extends AppCompatActivity {
     }
 
     public void newProfile(View view) {
+        newProfile.setClickable(false);
         Intent intent = new Intent(ProfilesActivity.this, CreateProfileActivity.class);
         startActivity(intent);
         finish();
     }
 
     public void backToMain(View view) {
+        backButton.setClickable(false);
         finish();
     }
 }
