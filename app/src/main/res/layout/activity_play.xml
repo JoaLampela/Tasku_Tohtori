@@ -7,14 +7,6 @@
     android:layout_height="match_parent"
     tools:context=".PlayActivity">
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@null"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.5" />
-
     <Button
         android:id="@+id/yesButton"
         android:layout_width="215dp"
@@ -64,16 +56,15 @@
 
     <TextView
         android:id="@+id/question"
-        android:layout_width="252dp"
-        android:layout_height="69dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:gravity="center"
         android:text="Kuuluuko oireisiisi"
         android:textSize="18sp"
-        app:layout_constraintBottom_toTopOf="@+id/guideline3"
+        app:layout_constraintBottom_toBottomOf="@+id/doctorImage"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/doctorImage"
-        app:layout_constraintVertical_bias="0.125" />
+        app:layout_constraintVertical_bias="0.1" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

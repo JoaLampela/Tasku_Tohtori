@@ -4,10 +4,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.TextView;
 
 public class ResultScreen extends AppCompatActivity {
-    TextView resultBox;
+    TextView resultText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -15,16 +16,26 @@ public class ResultScreen extends AppCompatActivity {
         setContentView(R.layout.activity_result_screen);
         Intent intent = getIntent();
         String message = intent.getStringExtra(PlayActivity.EXTRA_MESSAGE);
-        resultBox = findViewById(R.id.resultBox);
+        resultText = findViewById(R.id.resultText);
         printresult(message);
-
     }
+
     public void printresult(String message) {
         if(message.equals("Cured")) {
-            resultBox.setText(getString(R.string.result_unknown));
+            resultText.setText(getString(R.string.result_unknown));
         }
         else {
-            resultBox.setText(getString(R.string.result) + message);
+            resultText.setText(getString(R.string.result) + message);
         }
+    }
+
+    public void again(View view) {
+        Intent again = new Intent(this, PlayActivity.class);
+        startActivity(again);
+        finish();
+    }
+
+    public void backToMainActivity(View view) {
+        finish();
     }
 }

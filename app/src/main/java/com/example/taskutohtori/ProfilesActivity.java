@@ -95,4 +95,8 @@ public class ProfilesActivity extends AppCompatActivity {
         startActivity(intent);
         finish();
     }
+
+    public void backToMain(View view) {
+        finish();
+    }
 }
