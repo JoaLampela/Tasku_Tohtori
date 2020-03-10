@@ -62,6 +62,8 @@ public class PlayActivity extends AppCompatActivity {
     }
 
     public void onYesButtonClick(View v) {
+        yesButton.setEnabled(false);
+        noButton.setEnabled(false);
         increaseDiseasePower(currentSymptom);
         newQuestion();
         updateUI();
@@ -157,6 +159,8 @@ public class PlayActivity extends AppCompatActivity {
             startActivity(intent);
             finish();
         }
+        yesButton.setEnabled(true);
+        noButton.setEnabled(true);
     }
 
     //to be called after user answers no to the question

@@ -60,6 +60,28 @@ public class DataBaseManager {
         return database.getDiseaseDao().getDiseaseSexBiasWithName(disease);
     }
 
+    public int getSizeOfProfileList() {
+        return  database.getProfileDao().getAllProfiles().size();
+    }
+    public String getProfileNameWithActiveStatus() {
+        return database.getProfileDao().getAllProfilesWithActiveStatus(true).get(0).name;
+    }
+    public void updateAllProfilesToFalse() {
+        database.getProfileDao().updateActiveAllFalse(false);
+    }
+    public void addNewProfile(String name, int age, boolean male, boolean active) {
+        database.getProfileDao().insertProfile(new Profile(name, age, male, true));
+    }
+    public void deleteProfile(Profile profile) {
+        database.getProfileDao().deleteProfile(database.getProfileDao().getProfileWithId(profile.id));
+    }
+    public void updateProfileToActive(int id) {
+        database.getProfileDao().updateActive(true,id);
+    }
+    public ArrayList<Profile> getAllProfiles() {
+        return (ArrayList<Profile>) database.getProfileDao().getAllProfiles();
+    }
+
 
 
 }
