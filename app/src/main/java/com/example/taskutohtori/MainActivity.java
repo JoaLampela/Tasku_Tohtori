@@ -20,9 +20,9 @@ public class MainActivity extends AppCompatActivity {
     Button profilesButton;
     Button exitButton;
     TextView currentProfileTV;
+    DatabaseT database;
     boolean returning;
     ImageView profileImage;
-    DataBaseManager DBM;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,12 +33,12 @@ public class MainActivity extends AppCompatActivity {
         exitButton = findViewById(R.id.exitButton);
         currentProfileTV = findViewById(R.id.current_profile_text);
         profileImage = findViewById(R.id.profileImage);
-        DBM = new DataBaseManager(this);
+        database = Room.databaseBuilder(MainActivity.this, DatabaseT.class, "Database").createFromAsset("database/Database").allowMainThreadQueries().fallbackToDestructiveMigration().build();
         returning = false;
 
         //Starts profile creation activity if the app has not been opened before
         Intent createProfileActivity = new Intent(MainActivity.this, CreateProfileActivity.class);
-        if (DBM.getSizeOfProfileList() == 0) {
+        if (database.getProfileDao().getAllProfiles().size() == 0) {
             startActivity(createProfileActivity);
             returning = true;
         }
@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
     public void onPlayButtonClick(View v) {
-        if (DBM.getSizeOfProfileList() >=1) {
+        if (database.getProfileDao().getAllProfiles().size() >=1) {
             startActivity(new Intent(this,PlayActivity.class));
             returning = true;
         } else {
@@ -71,8 +71,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void updateCurrentProfileText() {
-        if (DBM.getSizeOfProfileList() >= 1) {
-            currentProfileTV.setText(DBM.getProfileNameWithActiveStatus());
+        if (database.getProfileDao().getAllProfiles().size() >= 1) {
+            currentProfileTV.setText(database.getProfileDao().getAllProfilesWithActiveStatus(true).get(0).name);
             profileImage.setImageResource(R.drawable.profile_image);
         }
     }

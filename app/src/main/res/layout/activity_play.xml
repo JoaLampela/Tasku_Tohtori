@@ -15,51 +15,52 @@
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.5" />
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="182dp"
-        android:orientation="horizontal"
+    <Button
+        android:id="@+id/yesButton"
+        android:layout_width="215dp"
+        android:layout_height="0dp"
+        android:onClick="onYesButtonClick"
+        android:text="@string/answer_yes"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintGuide_percent="0.75"
+        app:layout_constraintEnd_toStartOf="@+id/noButton"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/doctorImage" />
 
     <Button
-        android:id="@+id/yesButton"
-        android:layout_width="350dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
-        android:onClick="onYesButtonClick"
-        android:text="Kyllä"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.491"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guideline4" />
-
-    <Button
         android:id="@+id/noButton"
-        android:layout_width="350dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="28dp"
+        android:layout_width="215dp"
+        android:layout_height="0dp"
         android:onClick="onNoButtonClick"
-        android:text="Ei"
+        android:text="@string/answer_no"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.491"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toEndOf="@+id/yesButton"
+        app:layout_constraintTop_toBottomOf="@+id/doctorImage" />
 
     <ImageView
         android:id="@+id/doctorImage"
         android:layout_width="428dp"
         android:layout_height="557dp"
+        android:scaleType="centerCrop"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.529"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0"
-        app:srcCompat="@drawable/tohtori1" />
+        app:srcCompat="@drawable/dohdori1_scaled" />
+
+    <ImageView
+        android:id="@+id/speechBubbleImage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scaleType="fitStart"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/speechbubble_scaled">
+
+    </ImageView>
 
     <TextView
         android:id="@+id/question"
@@ -67,12 +68,12 @@
         android:layout_height="69dp"
         android:gravity="center"
         android:text="Kuuluuko oireisiisi"
-        android:textSize="18dp"
+        android:textSize="18sp"
         app:layout_constraintBottom_toTopOf="@+id/guideline3"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/doctorImage"
-        app:layout_constraintVertical_bias="0.124" />
+        app:layout_constraintVertical_bias="0.125" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

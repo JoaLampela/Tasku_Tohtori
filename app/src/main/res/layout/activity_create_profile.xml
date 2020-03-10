@@ -21,7 +21,7 @@
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/first_profile_name_text"
+            android:hint="@string/create_profile_name_text"
             android:inputType="text">
 
         </com.google.android.material.textfield.TextInputEditText>
@@ -38,7 +38,7 @@
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/first_activity_age_text"
+            android:hint="@string/create_profile_age_text"
             android:inputType="number">
 
         </com.google.android.material.textfield.TextInputEditText>
@@ -58,14 +58,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingBottom="10dp"
-            android:text="@string/first_activity_sex_text"
+            android:text="@string/create_profile_sex_text"
             android:textSize="18sp" />
 
         <RadioButton
             android:id="@+id/maleButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/first_profile_sex_male">
+            android:text="@string/create_profile_sex_male">
 
         </RadioButton>
 
@@ -73,7 +73,7 @@
             android:id="@+id/femaleButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/first_profile_sex_female">
+            android:text="@string/create_profile_sex_female">
 
         </RadioButton>
 
@@ -84,7 +84,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:onClick="createUser"
-        android:text="@string/first_profile_confirm_button">
+        android:text="@string/create_profile_confirm_button">
 
     </Button>
 
