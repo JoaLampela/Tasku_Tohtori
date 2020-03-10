@@ -1,11 +1,11 @@
 <resources>
     <string name="app_name">Taskutohtori</string>
-    <string name="first_profile_name_text">Nimi</string>
-    <string name="first_activity_age_text">Ikä 0–99</string>
-    <string name="first_activity_sex_text">Sukupuoli</string>
-    <string name="first_profile_sex_male">Mies</string>
-    <string name="first_profile_sex_female">Nainen</string>
-    <string name="first_profile_confirm_button">Luo Profiili</string>
+    <string name="create_profile_name_text">Nimi</string>
+    <string name="create_profile_age_text">Ikä 0–99</string>
+    <string name="create_profile_sex_text">Sukupuoli</string>
+    <string name="create_profile_sex_male">Mies</string>
+    <string name="create_profile_sex_female">Nainen</string>
+    <string name="create_profile_confirm_button">Luo Profiili</string>
     <string name="new_profile_button">Luo uusi profiili</string>
     <string name="main_activity_play_button">Aloita</string>
     <string name="main_activity_profiles_button">Profiilit</string>
@@ -18,4 +18,8 @@
     <string name="no_profiles_tv">Yhtään profiilia ei ole vielä luotu</string>
     <string name="answer_yes">Kyllä</string>
     <string name="answer_no">Ei</string>
+    <string name="result_unknown">En osaa sanoa mikä sinua vaivaa.</string>
+    <string name="result">Sinulla saattaa olla\u0020</string>
+    <string name="profile_age">Ikä:\u0020\u0020</string>
+    <string name="profile_sex">Sukupuoli:\u0020\u0020</string>
 </resources>

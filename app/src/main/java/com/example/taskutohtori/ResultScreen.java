@@ -21,10 +21,10 @@ public class ResultScreen extends AppCompatActivity {
     }
     public void printresult(String message) {
         if(message.equals("Cured")) {
-            resultBox.setText("En osaa sanoa mikä sinua vaivaa.");
+            resultBox.setText(getString(R.string.result_unknown));
         }
         else {
-            resultBox.setText("Sinulla saattaa olla " + message);
+            resultBox.setText(getString(R.string.result) + message);
         }
     }
 }

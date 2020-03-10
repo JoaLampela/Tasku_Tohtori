@@ -1,21 +1,14 @@
 package com.example.taskutohtori;
 
 import android.content.Context;
-import android.graphics.drawable.Drawable;
-import android.media.Image;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ImageSwitcher;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.room.Room;
-
-import java.util.ArrayList;
 import java.util.List;
 
 public class ProfileListAdapter extends ArrayAdapter<Profile> {
@@ -38,8 +31,6 @@ public class ProfileListAdapter extends ArrayAdapter<Profile> {
         boolean male = getItem(position).male;
         String sex = getItem(position).getSexString();
         boolean active = getItem(position).active;
-
-        Profile profile = new Profile(name, age, male);
 
         LayoutInflater inflater = LayoutInflater.from(context);
         convertView = inflater.inflate(resource, parent, false);

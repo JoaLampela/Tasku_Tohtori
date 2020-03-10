@@ -16,8 +16,13 @@ public class ImageManager extends AppCompatActivity {
     public ImageManager(){
         this.currentIndex = 0;
         this.doctorImages = new ArrayList<>();
-        this.doctorImages.add(R.drawable.tohtori1);
-        this.doctorImages.add(R.drawable.tohtori2);
+        this.doctorImages.add(R.drawable.dohdori1_scaled);
+        this.doctorImages.add(R.drawable.dohdori2_scaled);
+        this.doctorImages.add(R.drawable.dohdori3_scaled);
+        this.doctorImages.add(R.drawable.dohdori4_scaled);
+        this.doctorImages.add(R.drawable.dohdori5_scaled);
+        this.doctorImages.add(R.drawable.dohdori6_scaled);
+        this.doctorImages.add(R.drawable.dohdori7_scaled);
     }
 
 
