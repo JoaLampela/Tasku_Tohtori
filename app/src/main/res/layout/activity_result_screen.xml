@@ -6,32 +6,10 @@
     android:layout_height="match_parent"
     tools:context=".ResultScreen">
 
-    <Button
-        android:id="@+id/againButton"
-        android:layout_width="215dp"
-        android:layout_height="0dp"
-        android:onClick="again"
-        android:text="@string/again"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/backButton"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/doctorImage" />
-
-    <Button
-        android:id="@+id/backButton"
-        android:layout_width="215dp"
-        android:layout_height="0dp"
-        android:onClick="backToMainActivity"
-        android:text="@string/back"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/againButton"
-        app:layout_constraintTop_toBottomOf="@+id/doctorImage" />
-
     <ImageView
         android:id="@+id/doctorImage"
         android:layout_width="0dp"
-        android:layout_height="560dp"
+        android:layout_height="match_parent"
         android:scaleType="centerCrop"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -63,9 +41,9 @@
         android:text="@string/result"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="@id/doctorImage"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/speechBubbleImage"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@id/doctorImage"
-        app:layout_constraintVertical_bias="0.1" />
+        app:layout_constraintVertical_bias="0.08" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

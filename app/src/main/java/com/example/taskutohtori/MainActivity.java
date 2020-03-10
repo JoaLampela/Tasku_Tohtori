@@ -73,7 +73,11 @@ public class MainActivity extends AppCompatActivity {
     public void updateCurrentProfileText() {
         if (database.getProfileDao().getAllProfiles().size() >= 1) {
             currentProfileTV.setText(database.getProfileDao().getAllProfilesWithActiveStatus(true).get(0).name);
-            profileImage.setImageResource(R.drawable.profile_image);
+            if(database.getProfileDao().getAllProfilesWithActiveStatus(true).get(0).male) {
+                profileImage.setImageResource(R.drawable.profile_male);
+            } else {
+                profileImage.setImageResource(R.drawable.profile_female);
+            }
         }
     }
 
