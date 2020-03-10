@@ -23,17 +23,17 @@ public class ProfilesActivity extends AppCompatActivity {
     ListView profileList;
     Button newProfile;
     Switch deleteSwitch;
-    DatabaseT database;
     boolean delete;
     Profile profile;
     Toast toast;
+    DataBaseManager DBM;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profiles);
 
-        database = Room.databaseBuilder(this, DatabaseT.class, "Database").createFromAsset("database/Database").allowMainThreadQueries().fallbackToDestructiveMigration().build();
+        DBM = new DataBaseManager(this);
         newProfile = findViewById(R.id.newProfileButton);
         deleteSwitch = findViewById(R.id.deleteSwitch);
         profileList = findViewById(R.id.profileList);
@@ -59,15 +59,15 @@ public class ProfilesActivity extends AppCompatActivity {
 
                 profile = (Profile) adapterView.getAdapter().getItem((int) l);
 
-                if (!(profile.active) && delete && database.getProfileDao().getAllProfiles().size() > 1) {
-                    database.getProfileDao().deleteProfile(database.getProfileDao().getProfileWithId(profile.id));
+                if (!(profile.active) && delete && DBM.getSizeOfProfileList() > 1) {
+                    DBM.deleteProfile(profile);
                     updateProfileList();
 
                     updateToast("Profiili poistettu:  " + profile.name);
 
                 } else if(!delete) {
-                    database.getProfileDao().updateActiveAllFalse(false);
-                    database.getProfileDao().updateActive(true,profile.id);
+                    DBM.updateAllProfilesToFalse();
+                    DBM.updateProfileToActive(profile.id);
                     updateProfileList();
 
                 } else {
@@ -87,7 +87,7 @@ public class ProfilesActivity extends AppCompatActivity {
     }
 
     public void updateProfileList() {
-        profileList.setAdapter(new ProfileListAdapter(this,R.layout.profile_adapter_view_layout, database.getProfileDao().getAllProfiles()));
+        profileList.setAdapter(new ProfileListAdapter(this,R.layout.profile_adapter_view_layout, DBM.getAllProfiles()));
     }
 
     public void newProfile(View view) {

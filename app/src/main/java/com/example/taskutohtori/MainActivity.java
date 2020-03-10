@@ -20,9 +20,9 @@ public class MainActivity extends AppCompatActivity {
     Button profilesButton;
     Button exitButton;
     TextView currentProfileTV;
-    DatabaseT database;
     boolean returning;
     ImageView profileImage;
+    DataBaseManager DBM;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,12 +33,12 @@ public class MainActivity extends AppCompatActivity {
         exitButton = findViewById(R.id.exitButton);
         currentProfileTV = findViewById(R.id.current_profile_text);
         profileImage = findViewById(R.id.profileImage);
-        database = Room.databaseBuilder(MainActivity.this, DatabaseT.class, "Database").allowMainThreadQueries().fallbackToDestructiveMigration().build();
+        DBM = new DataBaseManager(this);
         returning = false;
 
         //Starts profile creation activity if the app has not been opened before
         Intent createProfileActivity = new Intent(MainActivity.this, CreateProfileActivity.class);
-        if (database.getProfileDao().getAllProfiles().size() == 0) {
+        if (DBM.getSizeOfProfileList() == 0) {
             startActivity(createProfileActivity);
             returning = true;
         }
@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
     public void onPlayButtonClick(View v) {
-        if (database.getProfileDao().getAllProfiles().size() >=1) {
+        if (DBM.getSizeOfProfileList() >=1) {
             startActivity(new Intent(this,PlayActivity.class));
             returning = true;
         } else {
@@ -71,8 +71,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void updateCurrentProfileText() {
-        if (database.getProfileDao().getAllProfiles().size() >= 1) {
-            currentProfileTV.setText(database.getProfileDao().getAllProfilesWithActiveStatus(true).get(0).name);
+        if (DBM.getSizeOfProfileList() >= 1) {
+            currentProfileTV.setText(DBM.getProfileNameWithActiveStatus());
             profileImage.setImageResource(R.drawable.profile_image);
         }
     }

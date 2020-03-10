@@ -21,7 +21,7 @@ public class CreateProfileActivity extends AppCompatActivity {
     RadioButton maleButton;
     RadioButton femaleButton;
     Button confirmButton;
-    DatabaseT database;
+    DataBaseManager DBM;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +33,7 @@ public class CreateProfileActivity extends AppCompatActivity {
         maleButton = findViewById(R.id.maleButton);
         femaleButton = findViewById(R.id.femaleButton);
         confirmButton = findViewById(R.id.confirmButton);
-        database = Room.databaseBuilder(this, DatabaseT.class, "Database").createFromAsset("database/Database").allowMainThreadQueries().fallbackToDestructiveMigration().build();
+        DBM = new DataBaseManager(this);
 
     }
 
@@ -94,8 +94,8 @@ public class CreateProfileActivity extends AppCompatActivity {
             return;
 
         } else {
-            database.getProfileDao().updateActiveAllFalse(false);
-            database.getProfileDao().insertProfile(new Profile(name, age, male, true));
+            DBM.updateAllProfilesToFalse();
+            DBM.addNewProfile(name, age, male, true);
             finish();
         }
     }
