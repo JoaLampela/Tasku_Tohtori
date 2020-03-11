@@ -7,6 +7,10 @@ import java.util.Random;
 
 //this object manages changing images of doctor and possibly other images as well if implemented
 
+/**
+ * @author Max Kaarla
+ * @version 1.0
+ */
 public class ImageManager extends AppCompatActivity {
 
     int currentIndex;

@@ -16,6 +16,9 @@ import static java.lang.StrictMath.abs;
 
 /**
  * this class takes care of this apps play function
+ * uses ImageManeger and DataBaseManager
+ * @see ImageManager
+ * @see DataBaseManager
  * @author Max Kaarla
  * @version 1.0
  */
@@ -153,7 +156,7 @@ public class PlayActivity extends AppCompatActivity {
      * @return next symptom name or "Cured"
      */
     private String newMainQuestion() {
-        String nextSymptom= null;
+        String nextSymptom;
         if (listOfAllMainSymptoms.isEmpty()) {
             return "Cured";
         }
@@ -249,6 +252,7 @@ public class PlayActivity extends AppCompatActivity {
 
     /**
      * Calculates parameter's diseases finalPower and updates it to power hasmap.
+     * Uses ageBonus and sexBonus methods
      * @param askedDisease Disease's name
      */
     private void updateFinalPower(String askedDisease) {

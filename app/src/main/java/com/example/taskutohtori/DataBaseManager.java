@@ -9,6 +9,8 @@ import java.util.ArrayList;
 
 /**
  * DatabaseManager takes care of getting information from database
+ * @author Max Kaarla
+ * @version 1.0
  */
 class DataBaseManager {
 
