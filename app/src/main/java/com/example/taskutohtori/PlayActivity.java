@@ -75,7 +75,7 @@ public class PlayActivity extends AppCompatActivity {
     /**
      * This method is called when yes button is clicked and calls NewQuestion and updateUi methods.
      * It locks buttons so that they can't be double clicked.
-     * @param v viwew of the app
+     * @param v view of the app
      */
     public void onYesButtonClick(View v) {
         yesButton.setClickable(false);
@@ -86,7 +86,7 @@ public class PlayActivity extends AppCompatActivity {
     }
 
     /**
-     * This method removes all diseases that person can't have based on his/her gender
+     * This method removes all diseases that person can't have based on his/her gender.
      */
     public void removeImpossibleDiseases() {
         for(int i= 0; i < listOfAllDiseases.size(); i++) {
@@ -223,7 +223,7 @@ public class PlayActivity extends AppCompatActivity {
 
     /**
      * removes all diseases that don't have parameter's main symptom
-     * @param currentSymptom is always mainSymptom
+     * @param currentSymptom currently asked mainSymptom
      */
     private void removeDiseasesWithoutMainSymptom(String currentSymptom) {
         listOfAllMainSymptoms = new ArrayList<>();
@@ -275,7 +275,7 @@ public class PlayActivity extends AppCompatActivity {
     /**
      * Calculates age bonus for updateFinalPower. Return value is max 1 and min 0.2 based on
      * distance between diseases ageBias and users ageGroup.
-     * AgeGroup is 1-5. Group 1 = 0-12, Group 2 = 12-21,
+     * AgeGroup is 1-5. Group 0 = noGroup, group 1 = 0-12, Group 2 = 12-21,
      * Group 3 = 21-40, Group 4 = 40-60, Group 5 60-
      * @param disease disease's name
      * @return float age bonus
@@ -309,8 +309,8 @@ public class PlayActivity extends AppCompatActivity {
     /**
      * Calculates sexBonus for updateFinalPower method. Return value is max 2.0 and min 0.0.
      * Calculation is based on users sex and diseases sexBonus. Sex bonus
-     * is a float number from -1.0-1.0 meaning -1.0 is only females' disease and 1.0 is only males'
-     * disease
+     * is a float number from -1.0-1.0 meaning -1.0 is only females' disease
+     * and 1.0 is only males' disease
      * @param disease disease's name
      * @return sexBonus as a float from 0.0 to 2.0
      */
@@ -324,7 +324,7 @@ public class PlayActivity extends AppCompatActivity {
     }
 
     /**
-     * Adds all allDiseases lists diseases' rare symptoms to finalSymptom list
+     * Adds all remaining diseases' rare symptoms to finalSymptom list
      */
     private void createFinalMainSymptomList() {
         for (int i = 0; i < listOfAllDiseases.size(); i++) {
