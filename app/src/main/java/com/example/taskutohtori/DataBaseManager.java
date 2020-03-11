@@ -13,16 +13,12 @@ public class DataBaseManager {
 
     DataBaseManager (Context context) {
         database = Room.databaseBuilder(context, DatabaseT.class, "Database").createFromAsset("database/Database").allowMainThreadQueries().fallbackToDestructiveMigration().build();
-        Log.d("TEST", "Database first item name: " + this.getSymptoms("Flunssa"));
     };
-
-    public int getSizeOfMainSymptoms(String nextDisease) {
-        return this.database.getJoinerDao().getMainSymptomsWithDiseaseId(database.getDiseaseDao().getDiseaseIdWithName(nextDisease)).size();
-    }
 
     public int getSizeOfDiseases(String symptom) {
         return this.database.getJoinerDao().getDiseasesWithSymptomName(symptom).size();
     }
+
     public int getSizeOfSymptoms(String disease) {
         return this.database.getJoinerDao().getSymptomNamesWithDiseaseName(disease).size();
     }
@@ -51,12 +47,15 @@ public class DataBaseManager {
         Log.d("TEST","AgeBias: "+database.getDiseaseDao().getDiseaseAgeBiasWithName(disease)+disease);
         return database.getDiseaseDao().getDiseaseAgeBiasWithName(disease);
     }
+
     public int getAge() {
         return database.getProfileDao().getAllProfilesWithActiveStatus(true).get(0).age;
     }
+
     public boolean getIsMale() {
         return database.getProfileDao().getAllProfilesWithActiveStatus(true).get(0).male;
     }
+
     public float getSexBias(String disease) {
         return database.getDiseaseDao().getDiseaseSexBiasWithName(disease);
     }
@@ -64,34 +63,36 @@ public class DataBaseManager {
     public int getSizeOfProfileList() {
         return  database.getProfileDao().getAllProfiles().size();
     }
+
     public String getProfileNameWithActiveStatus() {
         return database.getProfileDao().getAllProfilesWithActiveStatus(true).get(0).name;
     }
+
     public void updateAllProfilesToFalse() {
-        database.getProfileDao().updateActiveAllFalse(false);
+        database.getProfileDao().updateActiveAllFalse();
     }
+
     public void addNewProfile(String name, int age, boolean male, boolean active) {
         database.getProfileDao().insertProfile(new Profile(name, age, male, true));
     }
+
     public void deleteProfile(Profile profile) {
         database.getProfileDao().deleteProfile(database.getProfileDao().getProfileWithId(profile.id));
     }
+
     public void updateProfileToActive(int id) {
         database.getProfileDao().updateActive(true,id);
     }
+
     public ArrayList<Profile> getAllProfiles() {
         return (ArrayList<Profile>) database.getProfileDao().getAllProfiles();
     }
-    public String getNextMainSymptom() {
-        return database.getMainSymptomDao().getAllMainSymptoms().get(0);
-    }
+
     public ArrayList<String> getAllMainSymptoms() {
-        return (ArrayList<String>) database.getMainSymptomDao().getAllMainSymptoms();
+        return (ArrayList<String>) database.getMainSymptomDao().getAllMainSymptomNames();
     }
+
     public ArrayList<String> getListOfDiseasesRareSymptoms(String disease) {
         return (ArrayList<String>) database.getJoinerDao().getRareSymptomNamesWithDiseaseName(disease);
     }
-
-
-
 }

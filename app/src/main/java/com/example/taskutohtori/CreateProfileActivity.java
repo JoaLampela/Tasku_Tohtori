@@ -1,7 +1,6 @@
 package com.example.taskutohtori;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.room.Room;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -100,6 +99,5 @@ public class CreateProfileActivity extends AppCompatActivity {
             DBM.addNewProfile(name, age, male, true);
             finish();
         }
-
     }
 }

@@ -198,7 +198,6 @@ public class PlayActivity extends AppCompatActivity {
         }
     }
 
-
     //need to add age and sex bonuses back
     private void updateFinalPower(String askedDisease) {
 
@@ -218,7 +217,7 @@ public class PlayActivity extends AppCompatActivity {
     }
 
     //calculates ageBonus for updateFinalPower
-    private float ageBonus(String disease) {
+    float ageBonus(String disease) {
         int ageBias = DBM.getAgeBias(disease);
         int age = DBM.getAge();
         int ageGroup = 0;
@@ -245,7 +244,7 @@ public class PlayActivity extends AppCompatActivity {
     }
 
     //calculates sexBonus for updateFinalPower
-    private float sexBonus(String disease) {
+    float sexBonus(String disease) {
         boolean isMale = DBM.getIsMale();
         float sexBias = DBM.getSexBias(disease);
         if (isMale) {

@@ -1,18 +1,11 @@
 package com.example.taskutohtori;
 
 import androidx.room.Dao;
-import androidx.room.Insert;
 import androidx.room.Query;
 import java.util.List;
 
 @Dao
 public interface JoinerDao  {
-
-    @Insert
-    void insertJoinerValue(Joiner... joiners);
-
-    @Query("SELECT * FROM MainSymptoms INNER JOIN Joiner ON MainSymptoms.id = Joiner.mainSymptomId WHERE Joiner.diseaseId = :diseaseId")
-    List<MainSymptom> getMainSymptomsWithDiseaseId(int diseaseId);
 
     @Query("SELECT Diseases.name FROM Diseases INNER JOIN Joiner ON Diseases.id = Joiner.diseaseId INNER JOIN Symptoms ON Joiner.symptomId = Symptoms.id WHERE Symptoms.name = :symptomName")
     List<String> getDiseasesWithSymptomName(String symptomName);
