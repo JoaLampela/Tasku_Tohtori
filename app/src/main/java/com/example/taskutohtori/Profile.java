@@ -58,6 +58,7 @@ public class Profile {
 
     /**
      * Returns whether the profile is male or female
+     * @author Jarno Tiainen
      * @return profiles sex as string
      */
     public String getSexString() {

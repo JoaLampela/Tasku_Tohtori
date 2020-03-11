@@ -22,12 +22,25 @@ public class ProfileListAdapter extends ArrayAdapter<Profile> {
     private Context context;
     private int resource;
 
+    /**
+     * A constructor for ProfileListAdapter
+     * @param context the context used to create the adapter
+     * @param resource the layout used by the adapter
+     * @param objects the type of object the adapter gets its data from
+     */
     public ProfileListAdapter(@NonNull Context context, int resource, @NonNull List<Profile> objects) {
         super(context, resource, objects);
         this.context = context;
         this.resource = resource;
     }
 
+    /**
+     * Used to generate views for a ListView
+     * @param position position in a ListView the view is being created for
+     * @param convertView recycled view from the list
+     * @param parent the listView the views are being created for
+     * @return view to be shown on the list
+     */
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {

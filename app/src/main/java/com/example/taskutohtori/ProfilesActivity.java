@@ -15,6 +15,7 @@ import android.widget.Toast;
 /**
  * An activity where the user can choose their profile.
  * @author Jarno Tiainen
+ * @see ProfileListAdapter
  * @version 1.0
  */
 

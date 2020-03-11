@@ -10,6 +10,7 @@ import android.widget.TextView;
 /**
  * this activity declares result of PlayActivity
  * @author Max Kaarla
+ * @author Jarno Tiainen (layout)
  * @version 1.0
  */
 public class ResultScreen extends AppCompatActivity {
