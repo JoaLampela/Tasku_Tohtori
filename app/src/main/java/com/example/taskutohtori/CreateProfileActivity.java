@@ -97,7 +97,7 @@ public class CreateProfileActivity extends AppCompatActivity {
 
         } else {
             DBM.updateAllProfilesToFalse();
-            DBM.addNewProfile(name, age, male, true);
+            DBM.addNewProfile(name, age, male);
             finish();
         }
 

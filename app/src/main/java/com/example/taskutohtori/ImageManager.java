@@ -13,6 +13,10 @@ public class ImageManager extends AppCompatActivity {
 
     private ArrayList<Integer> doctorImages;
 
+    /**
+     * creates ImageManaged object and adds images from res to its doctorImages list
+     * sets currentIndex to 0
+     */
     public ImageManager(){
         this.currentIndex = 0;
         this.doctorImages = new ArrayList<>();
@@ -25,6 +29,11 @@ public class ImageManager extends AppCompatActivity {
     }
 
 
+    /**
+     * recursive method that always return index for new image
+     * that is never the same than the last index.
+     * @return next images index
+     */
     public int updateImage() {
         int nextImageIndex = getRandomNumberInRange();
         if(nextImageIndex != currentIndex) {
@@ -34,6 +43,11 @@ public class ImageManager extends AppCompatActivity {
         }
         return updateImage();
     }
+
+    /**
+     * gives random index from doctorImages list
+     * @return next images index
+     */
     private int getRandomNumberInRange() {
         Random r = new Random();
         return r.nextInt(this.doctorImages.size());

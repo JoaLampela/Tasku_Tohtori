@@ -7,91 +7,174 @@ import androidx.room.Room;
 
 import java.util.ArrayList;
 
-public class DataBaseManager {
+/**
+ * DatabaseManager takes care of getting information from database
+ */
+class DataBaseManager {
 
     private DatabaseT database;
 
+    /**
+     * created dataBaseManager object
+     * @param context activity that dataBaseManager will be used on
+     */
     DataBaseManager (Context context) {
         database = Room.databaseBuilder(context, DatabaseT.class, "Database").createFromAsset("database/Database").allowMainThreadQueries().fallbackToDestructiveMigration().build();
-        Log.d("TEST", "Database first item name: " + this.getSymptoms("Flunssa"));
-    };
-
-    public int getSizeOfMainSymptoms(String nextDisease) {
-        return this.database.getJoinerDao().getMainSymptomsWithDiseaseId(database.getDiseaseDao().getDiseaseIdWithName(nextDisease)).size();
     }
 
-    public int getSizeOfDiseases(String symptom) {
+    /**
+     * returns size of symptom's diseases list
+     * @param symptom symptoms name
+     * @return int size of list
+     */
+    int getSizeOfDiseases(String symptom) {
         return this.database.getJoinerDao().getDiseasesWithSymptomName(symptom).size();
     }
-    public int getSizeOfSymptoms(String disease) {
+
+    /**
+     * Returns size of Disease's all symptoms list
+     * @param disease diseases name
+     * @return int size of list
+     */
+    int getSizeOfSymptoms(String disease) {
         return this.database.getJoinerDao().getSymptomNamesWithDiseaseName(disease).size();
     }
 
-    public ArrayList<String> getSymptoms(String disease) {
+    /**
+     * Gets diseases symptom names list
+     * @param disease disease name
+     * @return ArrayList of symptom names
+     */
+    ArrayList<String> getSymptoms(String disease) {
         return (ArrayList<String>) this.database.getJoinerDao().getSymptomNamesWithDiseaseName(disease);
     }
 
-    public ArrayList<String> getMainSymptoms(String disease) {
+    /**
+     * Gets diseases main symptom names list
+     * @param disease disease's name
+     * @return ArrayList of main symptom names
+     */
+    ArrayList<String> getMainSymptoms(String disease) {
         return (ArrayList<String>) this.database.getJoinerDao().getMainSymptomNamesWithDiseaseName(disease);
     }
 
-    public ArrayList<String> getRareSymptoms(String disease) {
+    /**
+     * Gets diseases rare symptom names list
+     * @param disease disease's name
+     * @return ArrayList of main symptom names
+     */
+    ArrayList<String> getRareSymptoms(String disease) {
         return (ArrayList<String>) database.getJoinerDao().getRareSymptomNamesWithDiseaseName(disease);
     }
 
-    public ArrayList<String> getDiseases(String symptom) {
+    /**
+     * Gets all diseases that have this symptom
+     * @param symptom symptom's name
+     * @return ArrayList of disease names
+     */
+    ArrayList<String> getDiseases(String symptom) {
         return (ArrayList<String>) database.getJoinerDao().getDiseasesWithSymptomName(symptom);
     }
 
-    public ArrayList<String> getAllDiseases() {
+    /**
+     * Gets list of all disease names
+     * @return ArrayList of disease names
+     */
+    ArrayList<String> getAllDiseases() {
         return (ArrayList<String>) database.getDiseaseDao().getAllDiseaseNames();
     }
 
-    public int getAgeBias(String disease) {
+
+    /**
+     * Gets diseases age bias
+     * @param disease disease's name
+     * @return diseases ageBias
+     */
+    int getAgeBias(String disease) {
         Log.d("TEST","AgeBias: "+database.getDiseaseDao().getDiseaseAgeBiasWithName(disease)+disease);
         return database.getDiseaseDao().getDiseaseAgeBiasWithName(disease);
     }
-    public int getAge() {
+
+    /**
+     * Gets current user's age
+     * @return age of current user
+     */
+    int getAge() {
         return database.getProfileDao().getAllProfilesWithActiveStatus(true).get(0).age;
     }
-    public boolean getIsMale() {
+
+    /**
+     * gets boolean of current users isMale value
+     * @return boolean isMale
+     */
+    boolean getIsMale() {
         return database.getProfileDao().getAllProfilesWithActiveStatus(true).get(0).male;
     }
-    public float getSexBias(String disease) {
+
+    /**
+     * Gets disease's sexBias
+     * @param disease disease's name
+     * @return float diseases's sexBias
+     */
+    float getSexBias(String disease) {
         return database.getDiseaseDao().getDiseaseSexBiasWithName(disease);
     }
 
-    public int getSizeOfProfileList() {
+    /**
+     * Gets size of profiles list
+     * @return integer value of size of profiles list
+     */
+    int getSizeOfProfileList() {
         return  database.getProfileDao().getAllProfiles().size();
     }
-    public String getProfileNameWithActiveStatus() {
-        return database.getProfileDao().getAllProfilesWithActiveStatus(true).get(0).name;
-    }
-    public void updateAllProfilesToFalse() {
+
+    /**
+     * Sets all profiles active status to false
+     */
+    void updateAllProfilesToFalse() {
         database.getProfileDao().updateActiveAllFalse(false);
     }
-    public void addNewProfile(String name, int age, boolean male, boolean active) {
+
+    /**
+     * Creates new profile to database and sets its active status to true
+     * @param name name of new profile
+     * @param age age of new profile
+     * @param male boolean isMale for new profile
+     */
+    void addNewProfile(String name, int age, boolean male) {
         database.getProfileDao().insertProfile(new Profile(name, age, male, true));
     }
-    public void deleteProfile(Profile profile) {
+
+    /**
+     * Deletes profile from database
+     * @param profile Deletable profile
+     */
+    void deleteProfile(Profile profile) {
         database.getProfileDao().deleteProfile(database.getProfileDao().getProfileWithId(profile.id));
     }
-    public void updateProfileToActive(int id) {
+
+    /**
+     * Sets profiles ActiveStatus to true
+     * @param id Id of the profile
+     */
+    void updateProfileToActive(int id) {
         database.getProfileDao().updateActive(true,id);
     }
-    public ArrayList<Profile> getAllProfiles() {
+
+    /**
+     * Gets list of all profiles
+     * @return ArrayList of Profile entities
+     */
+    ArrayList<Profile> getAllProfiles() {
         return (ArrayList<Profile>) database.getProfileDao().getAllProfiles();
     }
-    public String getNextMainSymptom() {
-        return database.getMainSymptomDao().getAllMainSymptoms().get(0);
-    }
-    public ArrayList<String> getAllMainSymptoms() {
+
+    /**
+     * Gets all mainSymptoms
+     * @return ArrayList of all mainSymptom names from database
+     */
+    ArrayList<String> getAllMainSymptoms() {
         return (ArrayList<String>) database.getMainSymptomDao().getAllMainSymptoms();
     }
-    public ArrayList<String> getListOfDiseasesRareSymptoms(String disease) {
-        return (ArrayList<String>) database.getJoinerDao().getRareSymptomNamesWithDiseaseName(disease);
-    }
-
-
 
 }
