@@ -14,6 +14,11 @@ import java.util.HashMap;
 
 import static java.lang.StrictMath.abs;
 
+/**
+ * this class takes care of this apps play function
+ * @author Max Kaarla
+ * @version 1.0
+ */
 public class PlayActivity extends AppCompatActivity {
     public final static String EXTRA_MESSAGE = "com.example.myfirstapp.MESSAGE";
     private DataBaseManager DBM;
@@ -31,9 +36,9 @@ public class PlayActivity extends AppCompatActivity {
 
     private String currentSymptom;
     private String result;
-    boolean allMainQuestionsAsked;
-    boolean declareDisease;
-    boolean firstTime;
+    private boolean allMainQuestionsAsked;
+    private boolean declareDisease;
+    private boolean firstTime;
 
 
     @Override
@@ -64,6 +69,11 @@ public class PlayActivity extends AppCompatActivity {
         updateUI();
     }
 
+    /**
+     * This method is called when yes button is clicked and calls NewQuestion and updateUi methods.
+     * It locks buttons so that they can't be double clicked.
+     * @param v viwew of the app
+     */
     public void onYesButtonClick(View v) {
         yesButton.setClickable(false);
         noButton.setClickable(false);
@@ -72,6 +82,9 @@ public class PlayActivity extends AppCompatActivity {
         updateUI();
     }
 
+    /**
+     * This method removes all diseases that person can't have based on his/her gender
+     */
     public void removeImpossibleDiseases() {
         for(int i= 0; i < listOfAllDiseases.size(); i++) {
             if(DBM.getIsMale()) {
@@ -88,6 +101,13 @@ public class PlayActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Is called No-button is clicked. Removes all diseases that have the asked mainSymptom.
+     * When all main questions have been asked this method only updates Ui
+     * and calls for NnewQuestion method
+     * Calls newQuestion and updateUi methods
+     * @param v view of the app
+     */
     public void onNoButtonClick(View v) {
         yesButton.setClickable(false);
         noButton.setClickable(false);
@@ -100,6 +120,11 @@ public class PlayActivity extends AppCompatActivity {
         updateUI();
     }
 
+    /**
+     * Decides what will be the next questioned symptom and
+     * if currentSymptom = "Stop" this method calls calculateResult and sets declareDisease to true
+     * if currentSymptom = "Cured" this method only sets declareDisease to true
+     */
     private void newQuestion() {
         if (!allMainQuestionsAsked) {
             currentSymptom = newMainQuestion();
@@ -122,16 +147,25 @@ public class PlayActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * returns next main symptoms name for the next question.
+     * Returns "Cured" if listOfAllMainSymptoms is empty
+     * @return next symptom name or "Cured"
+     */
     private String newMainQuestion() {
         String nextSymptom= null;
         if (listOfAllMainSymptoms.isEmpty()) {
-            Log.d("TEST","Cured");
             return "Cured";
         }
         nextSymptom = listOfAllMainSymptoms.get(0);
         return nextSymptom;
     }
 
+    /**
+     * returns next main symptoms name for the next question
+     * or "Stop" if all finalSymptoms list is empty.
+     * @return next symptom name or "Stop"
+     */
     private String newRareQuestion() {
         if (!finalSymptoms.isEmpty()) {
             currentSymptom = finalSymptoms.get(0);
@@ -141,7 +175,10 @@ public class PlayActivity extends AppCompatActivity {
         return "Stop";
     }
 
-    //to be called after each button press(kyllä, ei)
+    /**
+     * Updates question text and changes doctor image with thisImageManager object
+     * Starts ResultScreen activity if declareDisease = true
+     */
     private void updateUI() {
         ImageView doctorImage = findViewById(R.id.doctorImage);
         doctorImage.setImageResource(thisImageManager.updateImage());
@@ -164,7 +201,10 @@ public class PlayActivity extends AppCompatActivity {
 
     }
 
-    //to be called after user answers no to the question
+    /**
+     * Removes all diseases that have parameter's symptom
+     * @param currentSymptom Currently asked symptom
+     */
     private void removeDiseases(String currentSymptom) {
         Log.d("TEST", "removeDisease");
         askedSymptoms.add(currentSymptom);
@@ -177,6 +217,11 @@ public class PlayActivity extends AppCompatActivity {
 
         }
     }
+
+    /**
+     * removes all diseases that don't have parameter's main symptom
+     * @param currentSymptom is always mainSymptom
+     */
     private void removeDiseasesWithoutMainSymptom(String currentSymptom) {
         listOfAllMainSymptoms = new ArrayList<>();
         listOfAllMainSymptoms.add(currentSymptom);
@@ -191,7 +236,10 @@ public class PlayActivity extends AppCompatActivity {
     }
 
 
-    //gives power values for each disease
+    /**
+     * creates hashmap that contains Disease names and their powers
+     * power is diseases probability based on users answers
+     */
     private void createPower() {
         for (int i = 0; i < listOfAllDiseases.size(); i++) {
             powerMap.put(listOfAllDiseases.get(i), (float) 0.0);
@@ -199,7 +247,10 @@ public class PlayActivity extends AppCompatActivity {
     }
 
 
-    //need to add age and sex bonuses back
+    /**
+     * Calculates parameter's diseases finalPower and updates it to power hasmap.
+     * @param askedDisease Disease's name
+     */
     private void updateFinalPower(String askedDisease) {
 
         float containedSymptoms = 0;
@@ -217,7 +268,14 @@ public class PlayActivity extends AppCompatActivity {
         powerMap.put(askedDisease, (containedSymptoms + abs(containedSymptoms)* ageBonus(askedDisease) + abs(containedSymptoms) * sexBonus(askedDisease)) / allSymptoms.size());
     }
 
-    //calculates ageBonus for updateFinalPower
+    /**
+     * Calculates age bonus for updateFinalPower. Return value is max 1 and min 0.2 based on
+     * distance between diseases ageBias and users ageGroup.
+     * AgeGroup is 1-5. Group 1 = 0-12, Group 2 = 12-21,
+     * Group 3 = 21-40, Group 4 = 40-60, Group 5 60-
+     * @param disease disease's name
+     * @return float age bonus
+     */
     private float ageBonus(String disease) {
         int ageBias = DBM.getAgeBias(disease);
         int age = DBM.getAge();
@@ -244,7 +302,14 @@ public class PlayActivity extends AppCompatActivity {
         return (float) 1.0/(abs((ageGroup - ageBias)) + 1);
     }
 
-    //calculates sexBonus for updateFinalPower
+    /**
+     * Calculates sexBonus for updateFinalPower method. Return value is max 2.0 and min 0.0.
+     * Calculation is based on users sex and diseases sexBonus. Sex bonus
+     * is a float number from -1.0-1.0 meaning -1.0 is only females' disease and 1.0 is only males'
+     * disease
+     * @param disease disease's name
+     * @return sexBonus as a float from 0.0 to 2.0
+     */
     private float sexBonus(String disease) {
         boolean isMale = DBM.getIsMale();
         float sexBias = DBM.getSexBias(disease);
@@ -254,6 +319,9 @@ public class PlayActivity extends AppCompatActivity {
         return abs(sexBias - 1);
     }
 
+    /**
+     * Adds all allDiseases lists diseases' rare symptoms to finalSymptom list
+     */
     private void createFinalMainSymptomList() {
         for (int i = 0; i < listOfAllDiseases.size(); i++) {
             for (int j = 0; j < DBM.getRareSymptoms(listOfAllDiseases.get(i)).size(); j++) {
@@ -264,9 +332,12 @@ public class PlayActivity extends AppCompatActivity {
                 }
             }
         }
-        Log.d("TEST","llllll "+finalSymptoms);
     }
 
+    /**
+     * chooses the best result based on power hashmaps power values
+     * and sets bestResults value to be that Diseases name
+     */
     private void calculateResult() {
         float bestResult = -100;
         for (int i = 0; i < listOfAllDiseases.size(); i++) {
