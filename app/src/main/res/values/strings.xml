@@ -19,4 +19,5 @@
     <string name="result_unknown">En osaa sanoa mikä sinua vaivaa.</string>
     <string name="result">Sinulla saattaa olla\u0020</string>
     <string name="back">Takaisin</string>
+    <string name="credits">Tekijät\n\nOhjelmointi:\nJoa Lampela\nMax Kaarla\nJarno Tiainen\n\nKuvitus:\nKaj Kaarla</string>
 </resources>
