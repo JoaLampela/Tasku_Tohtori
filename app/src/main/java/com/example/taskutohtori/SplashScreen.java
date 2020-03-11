@@ -5,6 +5,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 
+/**
+ * splashscreen for app
+ * @author Max Kaarla
+ * @version 1.0
+ */
+
 public class SplashScreen extends AppCompatActivity {
 
     @Override

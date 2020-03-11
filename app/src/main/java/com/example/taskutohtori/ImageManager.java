@@ -8,6 +8,7 @@ import java.util.Random;
 //this object manages changing images of doctor and possibly other images as well if implemented
 
 /**
+ * manages displayable images
  * @author Max Kaarla
  * @version 1.0
  */
