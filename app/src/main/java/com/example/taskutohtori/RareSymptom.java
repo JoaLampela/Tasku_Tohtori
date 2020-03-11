@@ -4,7 +4,10 @@ import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 /**
- *
+ * An Entity, meaning a table in the database. The table contains rows of objects of the given
+ * Entity's associated class.
+ * @author Joa Lampela
+ * @version 1.0
  */
 @Entity(tableName = "RareSymptoms")
 public class RareSymptom {
