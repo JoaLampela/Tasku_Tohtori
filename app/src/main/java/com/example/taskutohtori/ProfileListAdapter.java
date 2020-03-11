@@ -26,7 +26,7 @@ public class ProfileListAdapter extends ArrayAdapter<Profile> {
      * A constructor for ProfileListAdapter
      * @param context the context used to create the adapter
      * @param resource the layout used by the adapter
-     * @param objects the type of objects the adapter gets its data from
+     * @param objects the class of objects the adapter gets its data from
      */
     public ProfileListAdapter(@NonNull Context context, int resource, @NonNull List<Profile> objects) {
         super(context, resource, objects);

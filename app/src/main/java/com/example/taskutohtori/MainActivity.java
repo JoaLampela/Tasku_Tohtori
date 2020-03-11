@@ -1,7 +1,6 @@
 package com.example.taskutohtori;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.room.Room;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -119,7 +118,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
-     * Called when the play button is clicked. First disables all buttons in MainActivity so the
+     * Called when the info button is clicked. First disables all buttons in MainActivity so the
      * user can't open multiple activities by spam clicking the buttons. Then it starts
      * InfoActivity.
      * @param v view in MainActivity layout
@@ -129,8 +128,8 @@ public class MainActivity extends AppCompatActivity {
         playButton.setClickable(false);
         exitButton.setClickable(false);
         infoButton.setClickable(false);
-        setDelay(100);
         startActivity(new Intent(this,InfoActivity.class));
+        setDelay(100);
     }
 
     /**

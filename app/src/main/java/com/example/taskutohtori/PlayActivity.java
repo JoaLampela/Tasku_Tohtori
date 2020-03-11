@@ -24,7 +24,7 @@ import static java.lang.StrictMath.abs;
  * @version 1.0
  */
 public class PlayActivity extends AppCompatActivity {
-    public final static String EXTRA_MESSAGE = "com.example.myfirstapp.MESSAGE";
+    public final static String EXTRA_MESSAGE = "com.example.taskutohtori.MESSAGE";
     private DataBaseManager DBM;
 
     Button yesButton;
@@ -234,7 +234,7 @@ public class PlayActivity extends AppCompatActivity {
     }
 
     /**
-     * Calculates parameter's diseases finalPower and updates it to power hasmap.
+     * Calculates parameter's diseases finalPower and updates it to power hashmap.
      * Uses ageBonus and sexBonus methods
      * @param askedDisease Disease's name
      */
