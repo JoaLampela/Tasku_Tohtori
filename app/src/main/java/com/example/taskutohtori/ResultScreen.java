@@ -33,10 +33,10 @@ public class ResultScreen extends AppCompatActivity {
      */
     @SuppressLint("SetTextI18n")
     public void printResult(String message) {
-        if(message.equals("Cured")) {
+        if (message.equals("Cured")) {
             resultText.setText(getString(R.string.result_unknown));
+        } else {
+            resultText.setText(getString(R.string.result) + message);
         }
-        else resultText.setText(getString(R.string.result) + message);
     }
-
 }

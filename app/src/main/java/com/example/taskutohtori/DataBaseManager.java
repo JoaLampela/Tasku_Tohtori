@@ -86,7 +86,6 @@ class DataBaseManager {
         return (ArrayList<String>) database.getDiseaseDao().getAllDiseaseNames();
     }
 
-
     /**
      * Gets diseases age bias
      * @param disease disease's name
@@ -134,7 +133,7 @@ class DataBaseManager {
      * Sets all profiles active status to false
      */
     void updateAllProfilesToFalse() {
-        database.getProfileDao().updateActiveAllFalse(false);
+        database.getProfileDao().updateActiveAllFalse();
     }
 
     /**
@@ -176,7 +175,6 @@ class DataBaseManager {
      * @return ArrayList of all mainSymptom names from database
      */
     ArrayList<String> getAllMainSymptoms() {
-        return (ArrayList<String>) database.getMainSymptomDao().getAllMainSymptoms();
+        return (ArrayList<String>) database.getMainSymptomDao().getAllMainSymptomNames();
     }
-
 }

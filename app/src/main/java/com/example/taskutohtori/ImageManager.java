@@ -32,17 +32,17 @@ public class ImageManager extends AppCompatActivity {
         this.doctorImages.add(R.drawable.dohdori6_scaled);
     }
 
-
     /**
-     * recursive method that always return index for new image
-     * that is never the same than the last index.
-     * @return next images index
+     * A recursive method that randomly chooses and returns the next image's index upon being
+     * called. Uses an object instance of Java's own Random-class to generate a new index until it
+     * gets one that isn't the same as the index of the displayed image.
+     * @author Joa Lampela
+     * @return Returns the index of an image that is not already displayed.
      */
     public int updateImage() {
         int nextImageIndex = getRandomNumberInRange();
         if(nextImageIndex != currentIndex) {
             this.currentIndex = nextImageIndex;
-            doctorImages.get(nextImageIndex);
             return doctorImages.get(nextImageIndex);
         }
         return updateImage();

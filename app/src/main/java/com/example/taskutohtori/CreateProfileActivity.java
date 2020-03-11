@@ -124,6 +124,5 @@ public class CreateProfileActivity extends AppCompatActivity {
             DBM.addNewProfile(name, age, male);
             finish();
         }
-
     }
 }
