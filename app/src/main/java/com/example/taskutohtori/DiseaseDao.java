@@ -17,7 +17,7 @@ public interface DiseaseDao {
     /**
      * Defines the SQLite-query as a Java-method "getAllDiseaseNames".
      * @author Joa Lampela
-     * @return Returns the names of all diseases in the Diseases-table as a List.
+     * @return Returns the names of all Diseases in the Diseases-table as a List.
      * @see Disease
      */
     @Query("SELECT Diseases.name FROM Diseases")
