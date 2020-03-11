@@ -2,10 +2,16 @@ package com.example.taskutohtori;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
 
+/**
+ * this activity declares result of PlayActivity
+ * @author Max Kaarla
+ * @version 1.0
+ */
 public class ResultScreen extends AppCompatActivity {
     TextView resultText;
 
@@ -17,14 +23,19 @@ public class ResultScreen extends AppCompatActivity {
         Intent intent = getIntent();
         String message = intent.getStringExtra(PlayActivity.EXTRA_MESSAGE);
         resultText = findViewById(R.id.resultText);
-        printresult(message);
+        assert message != null;
+        printResult(message);
     }
 
-    public void printresult(String message) {
-        if(message.equals("Cured")) {
+    /**
+     * sets result textView's text based on message
+     * @param message text for result textView
+     */
+    @SuppressLint("SetTextI18n")
+    public void printResult(String message) {
+        if (message.equals("Cured")) {
             resultText.setText(getString(R.string.result_unknown));
-        }
-        else {
+        } else {
             resultText.setText(getString(R.string.result) + message);
         }
     }
