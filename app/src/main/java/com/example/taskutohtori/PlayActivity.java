@@ -186,9 +186,8 @@ public class PlayActivity extends AppCompatActivity {
     private void updateUI() {
         ImageView doctorImage = findViewById(R.id.doctorImage);
         doctorImage.setImageResource(thisImageManager.updateImage());
-
         if (!declareDisease) {
-            question.setText("Kuuluuko oireisiisi " + currentSymptom + "?");
+            question.setText("Kuuluuko oireisiisi " + currentSymptom.toLowerCase() + "?");
         } else {
             Intent intent = new Intent(PlayActivity.this, ResultScreen.class);
             intent.putExtra(EXTRA_MESSAGE, result);

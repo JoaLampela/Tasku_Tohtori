@@ -37,7 +37,7 @@ public class ResultScreen extends AppCompatActivity {
         if (message.equals("Cured")) {
             resultText.setText(getString(R.string.result_unknown));
         } else {
-            resultText.setText(getString(R.string.result) + message);
+            resultText.setText(getString(R.string.result) + message.toLowerCase() + ".");
         }
     }
 }

@@ -14,7 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 /**
- * MainActivity for the Taskutohtori app.
+ * MainActivity for the application.
  * @author Jarno Tiainen
  * @version 1.0
  */
