@@ -267,9 +267,10 @@ public class PlayActivity extends AppCompatActivity {
                 containedSymptoms--;
             }
         }
+        int balance = 5;
         powerMap.put(askedDisease,
-                (containedSymptoms + abs(containedSymptoms) *
-                        ageBonus(askedDisease) + abs(containedSymptoms) *
+                (containedSymptoms + balance*
+                        ageBonus(askedDisease) + balance *
                         sexBonus(askedDisease)) / allSymptoms.size());
     }
 
