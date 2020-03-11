@@ -1,23 +1,22 @@
 package com.example.taskutohtori;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.room.Room;
-import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.ListView;
-import android.widget.RadioGroup;
 import android.widget.Switch;
 import android.widget.Toast;
+
+/**
+ * An activity where the user can choose their profile.
+ * @author Jarno Tiainen
+ * @version 1.0
+ */
 
 public class ProfilesActivity extends AppCompatActivity {
 
@@ -30,6 +29,10 @@ public class ProfilesActivity extends AppCompatActivity {
     DataBaseManager DBM;
     Button backButton;
 
+    /**
+     * Sets a CheckedChangedListener to deleteSwitch and an ItemClickListener to profileList.
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -81,6 +84,12 @@ public class ProfilesActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Used to make a toast on screen when the user interacts with the activity. It first cancels
+     * any toasts currently on the screen and then sets a new text to appear in the new toast.
+     * The text in the new toast depends on where the user clicked in the activity.
+     * @param string
+     */
     public void updateToast(String string) {
         toast.cancel();
         toast = Toast.makeText(this, "", Toast.LENGTH_SHORT);
@@ -89,10 +98,18 @@ public class ProfilesActivity extends AppCompatActivity {
         toast.show();
     }
 
+    /**
+     * Sets the adapter for profileList again when the profile database has changed.
+     */
     public void updateProfileList() {
         profileList.setAdapter(new ProfileListAdapter(this,R.layout.profile_adapter_view_layout, DBM.getAllProfiles()));
     }
 
+    /**
+     * Called when the new profile creation button is clicked. First disables the button so the
+     * user can't click it again and then starts the CreateProfileActivity and closes this activity.
+     * @param view
+     */
     public void newProfile(View view) {
         newProfile.setClickable(false);
         Intent intent = new Intent(ProfilesActivity.this, CreateProfileActivity.class);
@@ -100,6 +117,11 @@ public class ProfilesActivity extends AppCompatActivity {
         finish();
     }
 
+    /**
+     * Called when the back button is clicked. First disables the button so the user can't click
+     * it again and then closes this activity.
+     * @param view
+     */
     public void backToMain(View view) {
         backButton.setClickable(false);
         finish();

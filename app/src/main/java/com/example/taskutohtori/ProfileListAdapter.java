@@ -11,6 +11,12 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import java.util.List;
 
+/**
+ * Custom ArrayAdapter for profileList in ProfilesActivity.
+ * @author Jarno Tiainen
+ * @version 1.0
+ */
+
 public class ProfileListAdapter extends ArrayAdapter<Profile> {
 
     private Context context;
