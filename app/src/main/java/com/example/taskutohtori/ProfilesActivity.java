@@ -30,8 +30,8 @@ public class ProfilesActivity extends AppCompatActivity {
     Button backButton;
 
     /**
-     * Sets a CheckedChangedListener to deleteSwitch and an ItemClickListener to profileList.
-     * @param savedInstanceState
+     * Sets a OnCheckedChangedListener to deleteSwitch and an OnItemClickListener to profileList.
+     * @param savedInstanceState a Bundle object containing the activity's previously saved state
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,7 +88,7 @@ public class ProfilesActivity extends AppCompatActivity {
      * Used to make a toast on screen when the user interacts with the activity. It first cancels
      * any toasts currently on the screen and then sets a new text to appear in the new toast.
      * The text in the new toast depends on where the user clicked in the activity.
-     * @param string
+     * @param string text to be showed in the toast
      */
     public void updateToast(String string) {
         toast.cancel();
@@ -108,7 +108,7 @@ public class ProfilesActivity extends AppCompatActivity {
     /**
      * Called when the new profile creation button is clicked. First disables the button so the
      * user can't click it again and then starts the CreateProfileActivity and closes this activity.
-     * @param view
+     * @param view view in ProfilesActivity layout
      */
     public void newProfile(View view) {
         newProfile.setClickable(false);
@@ -120,7 +120,7 @@ public class ProfilesActivity extends AppCompatActivity {
     /**
      * Called when the back button is clicked. First disables the button so the user can't click
      * it again and then closes this activity.
-     * @param view
+     * @param view view in ProfilesActivity layout
      */
     public void backToMain(View view) {
         backButton.setClickable(false);

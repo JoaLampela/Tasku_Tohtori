@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
      * Checks whether the profile database is empty when the app is started. If empty, it starts
      * CreateProfileActivity. Else, it displays the profile with the attribute active set to true
      * on screen.
-     * @param savedInstanceState
+     * @param savedInstanceState a Bundle object containing the activity's previously saved state
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
      * user can't open multiple activities by spam clicking the buttons. Then, if the profile
      * database has at least one profile, it starts PlayActivity. Else, it shows a toast
      * prompting the user to first make a profile.
-     * @param v
+     * @param v view in MainActivity layout
      */
     public void onPlayButtonClick(View v) {
         profilesButton.setClickable(false);
@@ -81,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
         } else {
             toast.cancel();
             CharSequence text = "Luo ensin profiili.";
-            Toast toast = Toast.makeText(this, text, Toast.LENGTH_SHORT);
+            toast = Toast.makeText(this, text, Toast.LENGTH_SHORT);
             toast.setGravity(Gravity.BOTTOM, 0, 750);
             toast.show();
             setDelay(100);
@@ -92,7 +92,7 @@ public class MainActivity extends AppCompatActivity {
      * Called when the play button is clicked. First disables all buttons in MainActivity so the
      * user can't open multiple activities by spam clicking the buttons. Then it starts
      * ProfilesActivity.
-     * @param v
+     * @param v view in MainActivity layout
      */
     public void onProfilesButtonClick(View v) {
         profilesButton.setClickable(false);
@@ -107,7 +107,7 @@ public class MainActivity extends AppCompatActivity {
      * Called when the play button is clicked. First disables all buttons in MainActivity so the
      * user can't open multiple activities by spam clicking the buttons. Then it closes
      * MainActivity and exits the app.
-     * @param v
+     * @param v view in MainActivity layout
      */
     public void onExitButtonClick(View v) {
         profilesButton.setClickable(false);
@@ -122,7 +122,7 @@ public class MainActivity extends AppCompatActivity {
      * Called when the play button is clicked. First disables all buttons in MainActivity so the
      * user can't open multiple activities by spam clicking the buttons. Then it starts
      * InfoActivity.
-     * @param v
+     * @param v view in MainActivity layout
      */
     public void onInfoButtonClick(View v) {
         profilesButton.setClickable(false);
@@ -160,7 +160,7 @@ public class MainActivity extends AppCompatActivity {
 
     /**
      * Re-enables the buttons in MainActivity to be clickable after a specified delay.
-     * @param delay
+     * @param delay specified delay in milliseconds
      */
     private void setDelay(int delay) {
         new Handler().postDelayed(new Runnable() {

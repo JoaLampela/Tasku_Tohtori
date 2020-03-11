@@ -29,22 +29,15 @@ public class Profile {
         this.active = active;
     }
 
+    /**
+     * Returns whether the profile is male or female
+     * @return profiles sex as string
+     */
     public String getSexString() {
         if (this.male) {
             return "Mies";
         } else {
             return "Nainen";
         }
-    }
-
-    @Override
-    public String toString() {
-        return this.name + ", " + this.age + ", " + getSexString() +"                 "+ activeText();
-    }
-    private String activeText() {
-        if (this.active) {
-            return "Aktiivinen profiili";
-        }
-        return "";
     }
 }

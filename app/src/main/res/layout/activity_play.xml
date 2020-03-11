@@ -60,7 +60,6 @@
         android:gravity="center"
         android:paddingLeft="32dp"
         android:paddingRight="32dp"
-        android:text="Kuuluuko oireisiisi"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="@+id/doctorImage"
         app:layout_constraintEnd_toEndOf="parent"
