@@ -15,7 +15,7 @@ import java.util.HashMap;
 import static java.lang.StrictMath.abs;
 
 /**
- * this class takes care of this apps play function
+ * This class takes care of this apps play function
  * uses ImageManeger and DataBaseManager
  * @see ImageManager
  * @see DataBaseManager
@@ -268,7 +268,10 @@ public class PlayActivity extends AppCompatActivity {
                 containedSymptoms--;
             }
         }
-        powerMap.put(askedDisease, (containedSymptoms + abs(containedSymptoms)* ageBonus(askedDisease) + abs(containedSymptoms) * sexBonus(askedDisease)) / allSymptoms.size());
+        powerMap.put(askedDisease,
+                (containedSymptoms + abs(containedSymptoms) *
+                        ageBonus(askedDisease) + abs(containedSymptoms) *
+                        sexBonus(askedDisease)) / allSymptoms.size());
     }
 
     /**
@@ -329,7 +332,9 @@ public class PlayActivity extends AppCompatActivity {
         for (int i = 0; i < listOfAllDiseases.size(); i++) {
             for (int j = 0; j < DBM.getRareSymptoms(listOfAllDiseases.get(i)).size(); j++) {
                 if (!askedSymptoms.contains(DBM.getRareSymptoms(listOfAllDiseases.get(i)).get(j))) {
-                    if (!finalSymptoms.contains(DBM.getRareSymptoms(listOfAllDiseases.get(i)).get(j))) {
+                    if (!finalSymptoms.contains(
+                            DBM.getRareSymptoms(listOfAllDiseases.get(i)).get(j))
+                    ) {
                         finalSymptoms.add(DBM.getRareSymptoms(listOfAllDiseases.get(i)).get(j));
                     }
                 }

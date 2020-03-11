@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
     Button exitButton;
     ImageButton infoButton;
     TextView currentProfileTV;
-    DatabaseT database;
+    DataBaseManager DBM;
     boolean noProfiles;
     ImageView profileImage;
     Toast toast;
@@ -47,13 +47,13 @@ public class MainActivity extends AppCompatActivity {
         infoButton = findViewById(R.id.infoButton);
         currentProfileTV = findViewById(R.id.current_profile_text);
         profileImage = findViewById(R.id.profileImage);
-        database = Room.databaseBuilder(MainActivity.this, DatabaseT.class, "Database").createFromAsset("database/Database").allowMainThreadQueries().fallbackToDestructiveMigration().build();
+        DBM = new DataBaseManager(this);
         noProfiles = false;
         toast = Toast.makeText(this, "", Toast.LENGTH_SHORT);
 
 
         Intent createProfileActivity = new Intent(MainActivity.this, CreateProfileActivity.class);
-        if (database.getProfileDao().getAllProfiles().size() == 0) {
+        if (DBM.getAllProfiles().size() == 0) {
             startActivity(createProfileActivity);
             noProfiles = true;
         }
@@ -75,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
         playButton.setClickable(false);
         exitButton.setClickable(false);
         infoButton.setClickable(false);
-        if (database.getProfileDao().getAllProfiles().size() >=1) {
+        if (DBM.getAllProfiles().size() >=1) {
             startActivity(new Intent(this,PlayActivity.class));
             setDelay(100);
         } else {
@@ -139,9 +139,9 @@ public class MainActivity extends AppCompatActivity {
      * name depending on the profiles sex.
      */
     public void updateCurrentProfileText() {
-        if (database.getProfileDao().getAllProfiles().size() >= 1) {
-            currentProfileTV.setText(database.getProfileDao().getAllProfilesWithActiveStatus(true).get(0).name);
-            if(database.getProfileDao().getAllProfilesWithActiveStatus(true).get(0).male) {
+        if (DBM.getAllProfiles().size() >= 1) {
+            currentProfileTV.setText(DBM.getActiveProfileName());
+            if(DBM.checkIfActiveProfileIsMale()) {
                 profileImage.setImageResource(R.drawable.profile_male);
             } else {
                 profileImage.setImageResource(R.drawable.profile_female);
