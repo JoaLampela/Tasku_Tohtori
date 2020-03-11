@@ -238,7 +238,6 @@ public class PlayActivity extends AppCompatActivity {
         }
     }
 
-
     /**
      * creates hashmap that contains Disease names and their powers
      * power is diseases probability based on users answers
@@ -248,7 +247,6 @@ public class PlayActivity extends AppCompatActivity {
             powerMap.put(listOfAllDiseases.get(i), (float) 0.0);
         }
     }
-
 
     /**
      * Calculates parameter's diseases finalPower and updates it to power hasmap.
@@ -280,7 +278,7 @@ public class PlayActivity extends AppCompatActivity {
      * @param disease disease's name
      * @return float age bonus
      */
-    private float ageBonus(String disease) {
+    float ageBonus(String disease) {
         int ageBias = DBM.getAgeBias(disease);
         int age = DBM.getAge();
         int ageGroup = 0;
@@ -314,7 +312,7 @@ public class PlayActivity extends AppCompatActivity {
      * @param disease disease's name
      * @return sexBonus as a float from 0.0 to 2.0
      */
-    private float sexBonus(String disease) {
+    float sexBonus(String disease) {
         boolean isMale = DBM.getIsMale();
         float sexBias = DBM.getSexBias(disease);
         if (isMale) {
