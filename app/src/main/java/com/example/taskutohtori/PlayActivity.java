@@ -20,7 +20,7 @@ import static java.lang.StrictMath.abs;
  * @see ImageManager
  * @see DataBaseManager
  * @author Max Kaarla
- * @author Jarno Tiainen (layout)
+ * @author Jarno Tiainen
  * @version 1.0
  */
 public class PlayActivity extends AppCompatActivity {
