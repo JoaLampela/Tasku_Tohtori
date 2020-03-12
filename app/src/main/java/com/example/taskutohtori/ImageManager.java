@@ -1,7 +1,5 @@
 package com.example.taskutohtori;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -12,9 +10,9 @@ import java.util.Random;
  * @author Max Kaarla
  * @version 1.0
  */
-public class ImageManager extends AppCompatActivity {
+public class ImageManager {
 
-    int currentIndex;
+    private int currentIndex;
 
     private ArrayList<Integer> doctorImages;
 
