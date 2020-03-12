@@ -79,6 +79,9 @@ public class PlayActivity extends AppCompatActivity {
      * @param v view of the app
      */
     public void onYesButtonClick(View v) {
+        if(allMainQuestionsAsked) {
+            askedSymptoms.add(currentSymptom);
+        }
         yesButton.setClickable(false);
         noButton.setClickable(false);
         allMainQuestionsAsked = true;
@@ -116,7 +119,6 @@ public class PlayActivity extends AppCompatActivity {
         yesButton.setClickable(false);
         noButton.setClickable(false);
         if (!allMainQuestionsAsked) {
-            removeDiseases(currentSymptom);
             listOfAllMainSymptoms.remove(currentSymptom);
             Log.d("TEST","listOfAllMainSymptoms = "+ listOfAllMainSymptoms);
         }
@@ -205,23 +207,6 @@ public class PlayActivity extends AppCompatActivity {
     }
 
     /**
-     * Removes all diseases that have parameter's symptom
-     * @param currentSymptom Currently asked symptom
-     */
-    private void removeDiseases(String currentSymptom) {
-        Log.d("TEST", "removeDisease");
-        askedSymptoms.add(currentSymptom);
-        for (int i = 0; i < DBM.getSizeOfDiseases(currentSymptom); i++) {
-            String thisDisease = DBM.getDiseases(currentSymptom).get(i);
-            if (DBM.getMainSymptoms(thisDisease).contains(currentSymptom)) {
-                listOfAllDiseases.remove(thisDisease);
-                Log.d("TEST","removed "+thisDisease);
-            }
-
-        }
-    }
-
-    /**
      * removes all diseases that don't have parameter's main symptom
      * @param currentSymptom currently asked mainSymptom
      */
@@ -260,18 +245,24 @@ public class PlayActivity extends AppCompatActivity {
         for (int i = 0; i < DBM.getSizeOfSymptoms(askedDisease); i++) {
             allSymptoms.add(DBM.getSymptoms(askedDisease).get(i));
         }
+        Log.d("TEST","askedSymptoms "+askedSymptoms);
         for (int i = 0; i < askedSymptoms.size(); i++) {
             if (allSymptoms.contains(askedSymptoms.get(i))) {
+                Log.d("TEST",""+askedDisease+" "+containedSymptoms);
                 containedSymptoms++;
             } else {
                 containedSymptoms--;
+                Log.d("TEST",""+askedDisease+" "+containedSymptoms);
             }
         }
         int balance = 5;
         powerMap.put(askedDisease,
                 (containedSymptoms + balance*
                         ageBonus(askedDisease) + balance *
-                        sexBonus(askedDisease)) / allSymptoms.size());
+                        sexBonus(askedDisease)));
+        Log.d("TEST","power = "+containedSymptoms +" "+ balance*
+                        ageBonus(askedDisease) + " " +balance *
+                        sexBonus(askedDisease) +" / " + askedDisease);
     }
 
     /**
