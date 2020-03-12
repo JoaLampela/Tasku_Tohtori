@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey;
 
 /**
  * An Entity, meaning a table in the database. The table contains rows of objects of the given
- * Entity's associated class.
+ * Entity's associated class. All columns in the table are declared as variables in the object.
  * @author Joa Lampela
  * @version 1.0
  * @see DiseaseDao
@@ -16,17 +16,28 @@ import androidx.room.PrimaryKey;
 public class Disease {
 
     /**
-     * All columns in the table are declared as variables in the object. This table's id is the
-     * Primary Key and must therefore have a unique value for each object. The attribute name is
-     * defined to be a unique index, so the same rules apply. The Primary Key is automatically
-     * generated within these constraints for each object in the table.
-     * @see com.example.taskutohtori.PlayActivity#ageBonus
-     * @see com.example.taskutohtori.PlayActivity#sexBonus
+     * This table's id is the Primary Key and must therefore have a unique value for each object.
+     * The Primary Key is automatically generated within these constraints for each object in the table.
      */
     @PrimaryKey(autoGenerate = true)
     int id;
+
+    /**
+     * The column "name" is set as a unique valued index, so there can be no two Disease-objects
+     * with the same value for their name.
+     */
     String name;
+
+    /**
+     * Disease's ageBias from 0 to 5.
+     * @see com.example.taskutohtori.PlayActivity#ageBonus
+     */
     int ageBias;
+
+    /**
+     * Disease's sexBias from -1 to 1.
+     * @see com.example.taskutohtori.PlayActivity#sexBonus
+     */
     float sexBias;
 
     /**
